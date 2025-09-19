@@ -4,27 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La Casa de las Cortinas - Diseño de Vanguardia</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Preconexiones para mejorar rendimiento -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://www.gstatic.com">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    
     <style>
+        :root {
+            --primary-bg: #101010;
+            --secondary-bg: #181818;
+            --accent-color: #4A5568;
+            --text-primary: #e5e5e5;
+            --text-secondary: #9CA3AF;
+            --success-color: #10B981;
+            --error-color: #EF4444;
+        }
+        
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #101010;
-            color: #e5e5e5;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
             overflow-x: hidden;
         }
+        
         h1, h2, h3 {
             font-family: 'Syne', sans-serif;
             font-weight: 800;
             text-transform: uppercase;
         }
+        
         .hero-section {
             position: relative;
             height: 100vh;
             overflow: hidden;
         }
+        
         .slide {
             position: absolute;
             top: 0;
@@ -40,9 +59,11 @@
             justify-content: center;
             text-align: center;
         }
+        
         .slide.active {
             opacity: 1;
         }
+        
         .slide::before {
             content: '';
             position: absolute;
@@ -52,53 +73,69 @@
             bottom: 0;
             background: rgba(0, 0, 0, 0.6);
         }
+        
         .collection-card {
             transition: all 0.3s ease;
             cursor: pointer;
         }
+        
         .collection-card .icon {
             transition: all 0.3s ease;
         }
+        
         .collection-card:hover {
             transform: translateY(-8px);
-            border-color: #4A5568;
+            border-color: var(--accent-color);
         }
+        
         .collection-card:hover .icon {
             color: #ffffff;
         }
+        
         .nav-overlay {
             transform: translateY(-100%);
             transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
         }
+        
         .nav-overlay.open {
             transform: translateY(0);
         }
+        
         .nav-link {
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.5s ease, transform 0.5s ease;
         }
+        
         .nav-overlay.open .nav-link {
             opacity: 1;
             transform: translateY(0);
         }
+        
         .reveal {
             opacity: 0;
             transform: translateY(50px);
             transition: opacity 1s ease-out, transform 1s ease-out;
         }
+        
         .reveal.visible {
             opacity: 1;
             transform: translateY(0);
         }
+        
         .animated-line {
-            stroke: #9CA3AF; /* Gris claro para las líneas */
+            stroke: var(--text-secondary);
             stroke-width: 2;
             stroke-linecap: round;
             transform-origin: top;
             animation: draw-curtain 6s ease-in-out infinite alternate;
         }
-        @keyframes draw-curtain { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+        
+        @keyframes draw-curtain { 
+            from { transform: scaleY(0); } 
+            to { transform: scaleY(1); } 
+        }
+        
         .animated-line:nth-child(1) { animation-delay: 0s; }
         .animated-line:nth-child(2) { animation-delay: 0.2s; }
         .animated-line:nth-child(3) { animation-delay: 0.4s; }
@@ -115,14 +152,17 @@
             visibility: hidden;
             transition: opacity 0.4s ease, visibility 0.4s ease;
         }
+        
         .modal.open {
             opacity: 1;
             visibility: visible;
         }
+        
         .modal-content {
             transform: scale(0.95);
             transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
+        
         .modal.open .modal-content {
             transform: scale(1);
         }
@@ -147,6 +187,7 @@
             animation: whatsapp-pulse 2s infinite;
             transition: transform 0.3s ease;
         }
+        
         .whatsapp-float:hover {
             transform: scale(1.1);
         }
@@ -176,7 +217,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), 
+                              linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
             background-size: 50px 50px;
             background-position: 0 0;
             animation: grid-movement 20s linear infinite;
@@ -189,13 +231,13 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.3); /* Overlay oscuro para que el texto sea legible */
+            background: rgba(0, 0, 0, 0.3);
             z-index: 1;
         }
 
         .collaboration-banner .content {
             position: relative;
-            z-index: 2; /* Asegura que el contenido esté sobre el overlay y el grid */
+            z-index: 2;
         }
         
         @keyframes grid-movement {
@@ -206,6 +248,85 @@
                 background-position: 50px 50px;
             }
         }
+        
+        /* Form button */
+        #submit-btn {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        #submit-btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-color);
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        #submit-btn:hover:before {
+            transform: scaleX(1);
+        }
+        
+        /* Loading spinner */
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            display: inline-block;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Form validation styles */
+        .form-input.error {
+            border-color: var(--error-color);
+        }
+        
+        .form-input.success {
+            border-color: var(--success-color);
+        }
+        
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        
+        /* Focus styles for accessibility */
+        button:focus,
+        a:focus,
+        input:focus,
+        textarea:focus {
+            outline: 2px solid #fff;
+            outline-offset: 2px;
+        }
+        
+        /* Reduced motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-[#101010]">
@@ -213,15 +334,15 @@
     <!-- Header & Navigation -->
     <header class="fixed top-0 left-0 w-full z-50 p-6 md:p-8">
         <div class="container mx-auto flex justify-between items-center">
-            <a href="#" class="text-xl md:text-2xl font-bold tracking-wider">La Casa de las Cortinas</a>
-            <button id="menu-button" class="z-50">
+            <a href="#" class="text-xl md:text-2xl font-bold tracking-wider" aria-label="La Casa de las Cortinas - Inicio">La Casa de las Cortinas</a>
+            <button id="menu-button" class="z-50" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="nav-overlay">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
             </button>
         </div>
     </header>
 
     <!-- Fullscreen Navigation Overlay -->
-    <div id="nav-overlay" class="nav-overlay fixed inset-0 bg-black/95 backdrop-blur-lg z-40 flex items-center justify-center">
+    <div id="nav-overlay" class="nav-overlay fixed inset-0 bg-black/95 backdrop-blur-lg z-40 flex items-center justify-center" role="navigation" aria-label="Menú principal">
         <nav class="flex flex-col items-center space-y-8 text-center">
             <a href="#inicio" class="nav-link text-4xl md:text-6xl font-bold hover:text-gray-400 transition-colors" style="transition-delay: 100ms;">Inicio</a>
             <a href="#colecciones" class="nav-link text-4xl md:text-6xl font-bold hover:text-gray-400 transition-colors" style="transition-delay: 200ms;">Colecciones</a>
@@ -237,15 +358,15 @@
         <section id="inicio" class="hero-section">
             <div class="slide active" style="background-image:url('https://images.unsplash.com/photo-1595343477546-b384d8583594?q=80&w=2070&auto=format&fit=crop')">
                  <div class="relative z-10 container mx-auto px-6">
-                    <h1 class="text-5xl md:text-8xl lg:text-9xl font-extrabold text-white leading-none">LUZ & FORMA</h1>
-                    <p class="mt-4 text-lg md:text-2xl text-gray-300 max-w-3xl mx-auto font-light">Redefinimos tus espacios con cortinas y toldos de diseño superior.</p>
-                </div>
+                     <h1 class="text-5xl md:text-8xl lg:text-9xl font-extrabold text-white leading-none">LUZ & FORMA</h1>
+                     <p class="mt-4 text-lg md:text-2xl text-gray-300 max-w-3xl mx-auto font-light">Redefinimos tus espacios con cortinas y toldos de diseño superior.</p>
+                 </div>
             </div>
             <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1629177281238-5804a4563a0a?q=80&w=1974&auto=format&fit=crop')">
                  <div class="relative z-10 container mx-auto px-6">
-                    <h1 class="text-5xl md:text-8xl lg:text-9xl font-extrabold text-white leading-none">CONTROL TOTAL</h1>
-                    <p class="mt-4 text-lg md:text-2xl text-gray-300 max-w-3xl mx-auto font-light">Experimente el confort de la automatización en su hogar.</p>
-                </div>
+                     <h1 class="text-5xl md:text-8xl lg:text-9xl font-extrabold text-white leading-none">CONTROL TOTAL</h1>
+                     <p class="mt-4 text-lg md:text-2xl text-gray-300 max-w-3xl mx-auto font-light">Experimente el confort de la automatización en su hogar.</p>
+                 </div>
             </div>
         </section>
 
@@ -258,32 +379,32 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Producto: Roller -->
-                    <div class="collection-card bg-[#181818] p-8 rounded-lg border border-gray-800 flex flex-col items-center justify-center text-center reveal" data-product="roller">
+                    <div class="collection-card bg-[#181818] p-8 rounded-lg border border-gray-800 flex flex-col items-center justify-center text-center reveal" data-product="roller" role="button" tabindex="0" aria-label="Ver detalles de Cortinas Roller">
                         <svg class="w-16 h-16 mb-6 text-gray-400 icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 12l8.954-8.955a1.125 1.125 0 011.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H18.375a1.125 1.125 0 001.125-1.125V9.75M8.25 21h7.5"></path></svg>
                         <h3 class="text-2xl text-white">Roller</h3>
                     </div>
                     <!-- Producto: Bandas Verticales -->
-                    <div class="collection-card bg-[#181818] p-8 rounded-lg border border-gray-800 flex flex-col items-center justify-center text-center reveal" data-product="bandas" style="transition-delay: 100ms;">
+                    <div class="collection-card bg-[#181818] p-8 rounded-lg border border-gray-800 flex flex-col items-center justify-center text-center reveal" data-product="bandas" style="transition-delay: 100ms;" role="button" tabindex="0" aria-label="Ver detalles de Bandas Verticales">
                         <svg class="w-16 h-16 mb-6 text-gray-400 icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 3v18M10 3v18M14 3v18M18 3v18"></path></svg>
                         <h3 class="text-2xl text-white">Bandas Verticales</h3>
                     </div>
                     <!-- Producto: Venecianas -->
-                    <div class="collection-card bg-[#181818] p-8 rounded-lg border border-gray-800 flex flex-col items-center justify-center text-center reveal" data-product="venecianas" style="transition-delay: 200ms;">
+                    <div class="collection-card bg-[#181818] p-8 rounded-lg border border-gray-800 flex flex-col items-center justify-center text-center reveal" data-product="venecianas" style="transition-delay: 200ms;" role="button" tabindex="0" aria-label="Ver detalles de Cortinas Venecianas">
                         <svg class="w-16 h-16 mb-6 text-gray-400 icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path></svg>
                         <h3 class="text-2xl text-white">Venecianas</h3>
                     </div>
                     <!-- Producto: Confeccionadas -->
-                    <div class="collection-card bg-[#181818] p-8 rounded-lg border border-gray-800 flex flex-col items-center justify-center text-center reveal" data-product="confeccionadas" style="transition-delay: 300ms;">
+                    <div class="collection-card bg-[#181818] p-8 rounded-lg border border-gray-800 flex flex-col items-center justify-center text-center reveal" data-product="confeccionadas" style="transition-delay: 300ms;" role="button" tabindex="0" aria-label="Ver detalles de Cortinas Confeccionadas">
                         <svg class="w-16 h-16 mb-6 text-gray-400 icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 4v16M21 4v16M3 4h3a4 4 0 014 4v8a4 4 0 01-4 4H3m18 0h-3a4 4 0 01-4-4V8a4 4 0 014-4h3"></path></svg>
                         <h3 class="text-2xl text-white">Confeccionadas</h3>
                     </div>
                     <!-- Producto: Toldos -->
-                    <div class="collection-card bg-[#181818] p-8 rounded-lg border border-gray-800 flex flex-col items-center justify-center text-center reveal" data-product="toldos" style="transition-delay: 400ms;">
+                    <div class="collection-card bg-[#181818] p-8 rounded-lg border border-gray-800 flex flex-col items-center justify-center text-center reveal" data-product="toldos" style="transition-delay: 400ms;" role="button" tabindex="0" aria-label="Ver detalles de Toldos">
                         <svg class="w-16 h-16 mb-6 text-gray-400 icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15.75h18"></path></svg>
                         <h3 class="text-2xl text-white">Toldos</h3>
                     </div>
                     <!-- Producto: Automatización -->
-                    <div class="collection-card bg-[#181818] p-8 rounded-lg border border-gray-800 flex flex-col items-center justify-center text-center reveal" data-product="automatizacion" style="transition-delay: 500ms;">
+                    <div class="collection-card bg-[#181818] p-8 rounded-lg border border-gray-800 flex flex-col items-center justify-center text-center reveal" data-product="automatizacion" style="transition-delay: 500ms;" role="button" tabindex="0" aria-label="Ver detalles de Automatización">
                         <svg class="w-16 h-16 mb-6 text-gray-400 icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" /><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6.75h.008v.008h-.008v-.008z" /></svg>
                         <h3 class="text-2xl text-white">Automatización</h3>
                         <a href="http://www.x1.com.ar" target="_blank" class="text-orange-400 font-bold mt-2 text-lg hover:underline transition-colors duration-300">by X-1 Hogar Inteligente</a>
@@ -326,7 +447,9 @@
         <section id="profesionales" class="py-24 md:py-32 bg-black">
             <div class="container mx-auto px-6 md:px-8 flex flex-col md:flex-row-reverse items-center gap-12 md:gap-20">
                 <div class="md:w-1/2 reveal">
-                    
+                    <svg class="w-full max-w-xs" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <line class="animated-line" x1="10" y1="0" x2="10" y2="100" /><line class="animated-line" x1="20" y1="0" x2="20" y2="100" /><line class="animated-line" x1="30" y1="0" x2="30" y2="100" /><line class="animated-line" x1="40" y1="0" x2="40" y2="100" /><line class="animated-line" x1="50" y1="0" x2="50" y2="100" /><line class="animated-line" x1="60" y1="0" x2="60" y2="100" /><line class="animated-line" x1="70" y1="0" x2="70" y2="100" /><line class="animated-line" x1="80" y1="0" x2="80" y2="100" /><line class="animated-line" x1="90" y1="0" x2="90" y2="100" />
+                    </svg>
                 </div>
                 <div class="md:w-1/2 text-left reveal" style="transition-delay: 200ms;">
                     <h2 class="text-5xl md:text-7xl mb-6">ESPACIO PROFESIONAL</h2>
@@ -355,16 +478,26 @@
                     </a>
                 </div>
 
-                <form id="contact-form" class="max-w-2xl mx-auto reveal">
+                <form id="contact-form" class="max-w-2xl mx-auto reveal" novalidate>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <input type="text" id="form-name" placeholder="Nombre" class="bg-transparent border-b border-gray-700 p-3 w-full focus:outline-none focus:border-gray-300 transition-colors">
-                        <input type="email" id="form-email" placeholder="Email" class="bg-transparent border-b border-gray-700 p-3 w-full focus:outline-none focus:border-gray-300 transition-colors">
+                        <div>
+                            <input type="text" id="form-name" placeholder="Nombre" class="form-input bg-transparent border-b border-gray-700 p-3 w-full focus:outline-none focus:border-gray-300 transition-colors" required>
+                            <div class="error-message" id="name-error">Por favor ingrese su nombre</div>
+                        </div>
+                        <div>
+                            <input type="email" id="form-email" placeholder="Email" class="form-input bg-transparent border-b border-gray-700 p-3 w-full focus:outline-none focus:border-gray-300 transition-colors" required>
+                            <div class="error-message" id="email-error">Por favor ingrese un email válido</div>
+                        </div>
                     </div>
                     <div class="mb-8">
-                        <textarea id="form-message" placeholder="Mensaje..." class="bg-transparent border-b border-gray-700 p-3 w-full h-24 focus:outline-none focus:border-gray-300 transition-colors"></textarea>
+                        <textarea id="form-message" placeholder="Mensaje..." class="form-input bg-transparent border-b border-gray-700 p-3 w-full h-24 focus:outline-none focus:border-gray-300 transition-colors" required></textarea>
+                        <div class="error-message" id="message-error">Por favor ingrese un mensaje</div>
                     </div>
                     <div>
-                        <button type="submit" id="submit-btn" class="bg-white text-black font-bold py-4 px-12 rounded-full hover:bg-gray-300 transition-colors duration-300 tracking-widest">ENVIAR A WHATSAPP</button>
+                        <button type="submit" id="submit-btn" class="bg-white text-black font-bold py-4 px-12 rounded-full hover:bg-gray-300 transition-colors duration-300 tracking-widest flex items-center justify-center">
+                            <span id="submit-text">ENVIAR MENSAJE</span>
+                            <span id="submit-spinner" class="spinner hidden"></span>
+                        </button>
                     </div>
                     <p id="form-status" class="mt-4 text-center text-sm font-semibold"></p>
                 </form>
@@ -382,7 +515,7 @@
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"></path></svg>
                     </a>
                     <a href="https://wa.me/5493412687230" target="_blank" aria-label="WhatsApp" class="text-gray-500 hover:text-green-500 transition-colors">
-                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.38 1.25 4.82l-1.34 4.92 5.04-1.32c1.39.71 2.97 1.12 4.63 1.12h.01c5.46 0 9.91-4.45 9.91-9.91s-4.45-9.91-9.91-9.91zM17.47 14.38c-.2-.1-.72-.36-1.18-.56-.27-.12-.49-.18-.69.18-.18.36-.45.71-.55.81-.1.1-.2.12-.38.06-.56-.2-1.32-.48-2.22-1.21-.7-.56-1.17-1.24-1.31-1.46-.12-.22-.01-.34.09-.45.09-.09.2-.24.3-.36.1-.12.15-.2.22-.34.07-.12.04-.24-.02-.36-.06-.12-.69-1.65-.94-2.26-.25-.6-.5-.52-.69-.52-.18-.01-.38-.01-.58-.01-.2 0-.52.07-.79.34-.27.27-.94.91-1.22 2.16-.27 1.25.2 2.31.34 2.47.14.18.94 1.52 2.82 2.59 1.52.86 2.02 1.05 2.57 1.15.55.1 1.04.09 1.42-.06.42-.18.71-.79.94-1.52.22-.72.22-1.34.16-1.46z"></path></svg>
+                           <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.38 1.25 4.82l-1.34 4.92 5.04-1.32c1.39.71 2.97 1.12 4.63 1.12h.01c5.46 0 9.91-4.45 9.91-9.91s-4.45-9.91-9.91-9.91zM17.47 14.38c-.2-.1-.72-.36-1.18-.56-.27-.12-.49-.18-.69.18-.18.36-.45.71-.55.81-.1.1-.2.12-.38.06-.56-.2-1.32-.48-2.22-1.21-.7-.56-1.17-1.24-1.31-1.46-.12-.22-.01-.34.09-.45.09-.09.2-.24.3-.36.1-.12.15-.2.22-.34.07-.12.04-.24-.02-.36-.06-.12-.69-1.65-.94-2.26-.25-.6-.5-.52-.69-.52-.18-.01-.38-.01-.58-.01-.2 0-.52.07-.79.34-.27.27-.94.91-1.22 2.16-.27 1.25.2 2.31.34 2.47.14.18.94 1.52 2.82 2.59 1.52.86 2.02 1.05 2.57 1.15.55.1 1.04.09 1.42-.06.42-.18.71-.79.94-1.52.22-.72.22-1.34.16-1.46z"></path></svg>
                     </a>
                 </div>
                 <p class="text-gray-600 text-sm">&copy; 2024 La Casa de las Cortinas. Todos los derechos reservados.</p>
@@ -396,12 +529,12 @@
     </a>
 
     <!-- Modal -->
-    <div id="product-modal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div id="product-modal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <div id="modal-content" class="modal-content bg-[#181818] rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto flex flex-col md:flex-row relative">
-            <button id="close-modal" class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors">
+            <button id="close-modal" class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors" aria-label="Cerrar modal">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
-            <img id="modal-image" src="" alt="" class="w-full md:w-1/2 h-64 md:h-auto object-cover rounded-t-lg md:rounded-l-lg md:rounded-t-none">
+            <img id="modal-image" src="" alt="" class="w-full md:w-1/2 h-64 md:h-auto object-cover rounded-t-lg md:rounded-l-lg md:rounded-t-none" loading="lazy">
             <div class="p-8 md:p-12 flex flex-col">
                 <h3 id="modal-title" class="text-4xl font-bold mb-4"></h3>
                 <p id="modal-description" class="text-gray-400 leading-relaxed mb-6"></p>
@@ -419,7 +552,7 @@
         import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Configuración de Firebase (proporcionada por el entorno)
+        // Configuración de Firebase
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
 
@@ -453,123 +586,298 @@
             const menuButton = document.getElementById('menu-button');
             const navOverlay = document.getElementById('nav-overlay');
             const navLinks = navOverlay.querySelectorAll('a');
-            menuButton.addEventListener('click', () => { navOverlay.classList.toggle('open'); });
-            navLinks.forEach(link => { link.addEventListener('click', () => { navOverlay.classList.remove('open'); }); });
+            
+            const toggleMenu = () => {
+                const isOpen = navOverlay.classList.toggle('open');
+                menuButton.setAttribute('aria-expanded', isOpen);
+                
+                // Bloquear scroll cuando el menú está abierto
+                document.body.style.overflow = isOpen ? 'hidden' : '';
+            };
+            
+            menuButton.addEventListener('click', toggleMenu);
+            navLinks.forEach(link => { 
+                link.addEventListener('click', () => { 
+                    navOverlay.classList.remove('open');
+                    menuButton.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = '';
+                }); 
+            });
+
+            // Cerrar menú con tecla ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && navOverlay.classList.contains('open')) {
+                    toggleMenu();
+                }
+            });
 
             // --- Slider Logic ---
             const slides = document.querySelectorAll('.slide');
             let currentSlide = 0;
-            if (slides.length > 0) {
-                setInterval(() => {
-                    slides[currentSlide].classList.remove('active');
-                    currentSlide = (currentSlide + 1) % slides.length;
-                    slides[currentSlide].classList.add('active');
-                }, 5000); // Cambia cada 5 segundos
-            }
+            let slideInterval;
+            
+            const startSlider = () => {
+                if (slides.length > 0) {
+                    slideInterval = setInterval(() => {
+                        slides[currentSlide].classList.remove('active');
+                        currentSlide = (currentSlide + 1) % slides.length;
+                        slides[currentSlide].classList.add('active');
+                    }, 5000); // Cambia cada 5 segundos
+                }
+            };
+            
+            const stopSlider = () => {
+                clearInterval(slideInterval);
+            };
+            
+            // Pausar slider cuando la pestaña no está visible
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    stopSlider();
+                } else {
+                    startSlider();
+                }
+            });
+            
+            startSlider();
 
             // --- Scroll Reveal Logic ---
             const revealElements = document.querySelectorAll('.reveal');
             const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } });
+                entries.forEach(entry => { 
+                    if (entry.isIntersecting) { 
+                        entry.target.classList.add('visible'); 
+                    } 
+                });
             }, { threshold: 0.1 });
             revealElements.forEach(el => observer.observe(el));
 
             // --- Modal Logic ---
             const productData = {
-                roller: { title: "Cortinas Roller", image: "https://images.unsplash.com/photo-1593339798364-c869212a865a?q=80&w=1964&auto=format&fit=crop", description: "La solución perfecta para un control de luz preciso y un estilo minimalista. Su diseño limpio y funcional se adapta a cualquier ambiente moderno.", features: ["Telas Blackout, Sunscreen y decorativas.", "Control total de la privacidad y la luz solar.", "Mecanismos manuales o motorizados.", "Fácil limpieza y mantenimiento."] },
-                bandas: { title: "Bandas Verticales", image: "https://images.unsplash.com/photo-1617362328412-c0527555f2a8?q=80&w=1974&auto=format&fit=crop", description: "Ideales para grandes ventanales y puertas corredizas, las bandas verticales ofrecen una elegancia versátil y un control excepcional del ingreso de luz.", features: ["Láminas giratorias de hasta 180 grados.", "Disponibles en una amplia gama de telas y texturas.", "Solución ideal para paños de grandes dimensiones.", "Aportan una sensación de altura a los espacios."] },
-                venecianas: { title: "Cortinas Venecianas", image: "https://images.unsplash.com/photo-1618220252344-8ec9167299a8?q=80&w=1974&auto=format&fit=crop", description: "Un clásico atemporal que permite un juego de luces y sombras inigualable. Perfectas para crear ambientes íntimos y elegantes.", features: ["Fabricadas en aluminio de alta resistencia o madera natural.", "Control preciso de la orientación de las láminas.", "Disponibles en múltiples anchos y acabados.", "Alta durabilidad y fácil mantenimiento."] },
-                confeccionadas: { title: "Cortinas Confeccionadas", image: "https://images.unsplash.com/photo-1542674558-6ebd422de082?q=80&w=1974&auto=format&fit=crop", description: "Aportan calidez, textura y sofisticación. Cada cortina se confecciona artesanalmente para lograr una caída y terminaciones perfectas.", features: ["Selección premium de telas: lino, gasa, terciopelo y más.", "Diseños a medida: pliegues, tablas, ojetillos.", "Terminaciones artesanales de alta costura.", "Aislamiento térmico y acústico superior."] },
-                toldos: { title: "Toldos", image: "https://images.unsplash.com/photo-1600585152220-088258f7d9d2?q=80&w=2070&auto=format&fit=crop", description: "Amplíe y proteja sus espacios exteriores con estilo. Nuestros toldos ofrecen una protección solar eficaz sin sacrificar el diseño.", features: ["Sistemas de brazos invisibles, verticales y de proyección.", "Lonas acrílicas con tratamiento UV de alta resistencia.", "Estructuras de aluminio robustas y duraderas.", "Opciones de accionamiento manual o motorizado."] },
-                automatizacion: { title: "Automatización", image: "https://images.unsplash.com/photo-1588595053293-374145f47079?q=80&w=1974&auto=format&fit=crop", description: "Integre el máximo confort y tecnología en su hogar. Controle todas sus cortinas y toldos con un solo toque o por comando de voz.", features: ["Motores ultra silenciosos de última generación.", "Control a través de control remoto, aplicación móvil o asistentes de voz.", "Programación de escenas y horarios.", "Integración completa con sistemas de domótica existentes."] }
+                roller: { 
+                    title: "Cortinas Roller", 
+                    image: "https://images.unsplash.com/photo-1593339798364-c869212a865a?q=80&w=1964&auto=format&fit=crop", 
+                    description: "La solución perfecta para un control de luz preciso y un estilo minimalista. Su diseño limpio y funcional se adapta a cualquier ambiente moderno.", 
+                    features: ["Telas Blackout, Sunscreen y decorativas.", "Control total de la privacidad y la luz solar.", "Mecanismos manuales o motorizados.", "Fácil limpieza y mantenimiento."] 
+                },
+                bandas: { 
+                    title: "Bandas Verticales", 
+                    image: "https://images.unsplash.com/photo-1617362328412-c0527555f2a8?q=80&w=1974&auto=format&fit=crop", 
+                    description: "Ideales para grandes ventanales y puertas corredizas, las bandas verticales ofrecen una elegancia versátil y un control excepcional del ingreso de luz.", 
+                    features: ["Láminas giratorias de hasta 180 grados.", "Disponibles en una amplia gama de telas y texturas.", "Solución ideal para paños de grandes dimensiones.", "Aportan una sensación de altura a los espacios."] 
+                },
+                venecianas: { 
+                    title: "Cortinas Venecianas", 
+                    image: "https://images.unsplash.com/photo-1618220252344-8ec9167299a8?q=80&w=1974&auto=format&fit=crop", 
+                    description: "Un clásico atemporal que permite un juego de luces y sombras inigualable. Perfectas para crear ambientes íntimos y elegantes.", 
+                    features: ["Fabricadas en aluminio de alta resistencia o madera natural.", "Control preciso de la orientación de las láminas.", "Disponibles en múltiples anchos y acabados.", "Alta durabilidad y fácil mantenimiento."] 
+                },
+                confeccionadas: { 
+                    title: "Cortinas Confeccionadas", 
+                    image: "https://images.unsplash.com/photo-1542674558-6ebd422de082?q=80&w=1974&auto=format&fit=crop", 
+                    description: "Aportan calidez, textura y sofisticación. Cada cortina se confecciona artesanalmente para lograr una caída y terminación perfectas, adaptándose a cualquier estilo decorativo, desde lo clásico hasta lo más moderno.", 
+                    features: ["Confección a medida con telas de alta calidad.", "Diversidad de estilos: pliegues, fruncidos, presillas, etc.", "Posibilidad de combinar con blackouts o visillos.", "Aportan un toque de lujo y confort a cualquier habitación."] 
+                },
+                toldos: { 
+                    title: "Toldos", 
+                    image: "https://images.unsplash.com/photo-1594950346083-efc33cf85289?q=80&w=1974&auto=format&fit=crop", 
+                    description: "Protección solar y confort en espacios exteriores. Nuestros toldos combinan funcionalidad y diseño, creando ambientes frescos y protegidos del sol y el calor, ideales para terrazas y jardines.", 
+                    features: ["Mecanismos manuales o automáticos.", "Tejidos acrílicos o screen con protección UV.", "Estructuras de aluminio o acero inoxidable.", "Resistentes a las inclemencias del tiempo."] 
+                },
+                automatizacion: { 
+                    title: "Automatización", 
+                    image: "https://images.unsplash.com/photo-1558231920-c8f33190b240?q=80&w=1974&auto=format&fit=crop", 
+                    description: "La tecnología al servicio del confort. Motorizamos tus cortinas y toldos para un control total y sin esfuerzo. Compatible con sistemas de domótica para que tu hogar sea verdaderamente inteligente.", 
+                    features: ["Control remoto o por aplicación móvil.", "Programación de horarios y escenas.", "Silenciosos y eficientes energéticamente.", "Integración con asistentes de voz (Google Home, Alexa)."] 
+                }
             };
 
-            const modal = document.getElementById('product-modal');
+            const productModal = document.getElementById('product-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalImage = document.getElementById('modal-image');
+            const modalDescription = document.getElementById('modal-description');
+            const modalFeatures = document.getElementById('modal-features');
             const closeModalBtn = document.getElementById('close-modal');
             const collectionCards = document.querySelectorAll('.collection-card');
+            
+            let activeModalProduct = null;
+
+            const openModal = (productId) => {
+                const product = productData[productId];
+                
+                if (product) {
+                    modalTitle.textContent = product.title;
+                    modalImage.src = product.image;
+                    modalImage.alt = product.title;
+                    modalImage.onerror = function() {
+                        this.src = "https://placehold.co/400x300/4a5568/ffffff?text=Imagen+no+disponible";
+                    };
+                    modalDescription.textContent = product.description;
+                    modalFeatures.innerHTML = '';
+                    product.features.forEach(feature => {
+                        const li = document.createElement('li');
+                        li.textContent = feature;
+                        modalFeatures.appendChild(li);
+                    });
+                    
+                    productModal.classList.add('open');
+                    activeModalProduct = productId;
+                    
+                    // Pausar slider cuando el modal está abierto
+                    stopSlider();
+                    
+                    // Enfocar el botón de cerrar para mejor accesibilidad
+                    setTimeout(() => closeModalBtn.focus(), 100);
+                }
+            };
+
+            const closeModal = () => {
+                productModal.classList.remove('open');
+                activeModalProduct = null;
+                
+                // Reanudar slider cuando el modal se cierra
+                startSlider();
+            };
 
             collectionCards.forEach(card => {
                 card.addEventListener('click', () => {
                     const productId = card.dataset.product;
-                    const data = productData[productId];
-                    document.getElementById('modal-image').src = data.image;
-                    document.getElementById('modal-image').alt = data.title;
-                    document.getElementById('modal-title').textContent = data.title;
-                    document.getElementById('modal-description').textContent = data.description;
-                    const featuresList = document.getElementById('modal-features');
-                    featuresList.innerHTML = '';
-                    data.features.forEach(feature => {
-                        const li = document.createElement('li');
-                        li.textContent = feature;
-                        featuresList.appendChild(li);
-                    });
-                    modal.classList.add('open');
+                    openModal(productId);
+                });
+                
+                // Permitir abrir modal con tecla Enter
+                card.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        const productId = card.dataset.product;
+                        openModal(productId);
+                    }
                 });
             });
 
-            const closeModal = () => modal.classList.remove('open');
             closeModalBtn.addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
 
-            // --- Form to Firestore & WhatsApp Logic ---
-            const contactForm = document.getElementById('contact-form');
-            const submitBtn = document.getElementById('submit-btn');
-            const formStatus = document.getElementById('form-status');
+            productModal.addEventListener('click', (event) => {
+                if (event.target === productModal) {
+                    closeModal();
+                }
+            });
             
-            if(contactForm) {
-                contactForm.addEventListener('submit', async function(e) {
-                    e.preventDefault();
-                    
-                    submitBtn.disabled = true;
-                    submitBtn.textContent = 'Enviando...';
-                    formStatus.textContent = '';
-                    
-                    const name = document.getElementById('form-name').value;
-                    const email = document.getElementById('form-email').value;
-                    const message = document.getElementById('form-message').value;
+            // Cerrar modal con tecla ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && productModal.classList.contains('open')) {
+                    closeModal();
+                }
+            });
 
-                    // Validación básica
-                    if (!name || !email || !message) {
-                        formStatus.textContent = 'Por favor, completa todos los campos.';
-                        formStatus.classList.remove('text-green-500');
-                        formStatus.classList.add('text-red-500');
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = 'ENVIAR A WHATSAPP';
-                        return;
+            // --- Contact Form Logic ---
+            const contactForm = document.getElementById('contact-form');
+            const formStatus = document.getElementById('form-status');
+            const submitBtn = document.getElementById('submit-btn');
+            const submitText = document.getElementById('submit-text');
+            const submitSpinner = document.getElementById('submit-spinner');
+            const formInputs = document.querySelectorAll('.form-input');
+            
+            // Validación en tiempo real
+            formInputs.forEach(input => {
+                input.addEventListener('blur', () => validateField(input));
+                input.addEventListener('input', () => clearFieldError(input));
+            });
+            
+            const validateField = (field) => {
+                const errorElement = document.getElementById(`${field.id}-error`);
+                
+                if (field.hasAttribute('required') && !field.value.trim()) {
+                    field.classList.add('error');
+                    field.classList.remove('success');
+                    errorElement.style.display = 'block';
+                    return false;
+                }
+                
+                if (field.type === 'email' && field.value.trim()) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(field.value)) {
+                        field.classList.add('error');
+                        field.classList.remove('success');
+                        errorElement.textContent = 'Por favor ingrese un email válido';
+                        errorElement.style.display = 'block';
+                        return false;
                     }
-                    
-                    try {
-                        // Guarda los datos en Firestore
-                        const contactsCollectionRef = collection(db, `artifacts/${appId}/public/data/contacts`);
-                        await addDoc(contactsCollectionRef, {
-                            name,
-                            email,
-                            message,
-                            timestamp: new Date()
-                        });
-                        
-                        // Muestra mensaje de éxito y abre WhatsApp
-                        formStatus.textContent = 'Mensaje enviado correctamente.';
-                        formStatus.classList.remove('text-red-500');
-                        formStatus.classList.add('text-green-500');
-
-                        const whatsappMessage = `¡Hola! Quisiera hacer una consulta:\n\n*Nombre:* ${name}\n*Email:* ${email}\n\n*Mensaje:*\n${message}`;
-                        const whatsappUrl = `https://wa.me/5493412687230?text=${encodeURIComponent(whatsappMessage)}`;
-                        
-                        window.open(whatsappUrl, '_blank');
-                        
-                        contactForm.reset();
-                    } catch (error) {
-                        console.error("Error al enviar el formulario a Firestore:", error);
-                        formStatus.textContent = 'Ocurrió un error. Por favor, inténtalo de nuevo.';
-                        formStatus.classList.remove('text-green-500');
-                        formStatus.classList.add('text-red-500');
-                    } finally {
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = 'ENVIAR A WHATSAPP';
+                }
+                
+                field.classList.remove('error');
+                field.classList.add('success');
+                errorElement.style.display = 'none';
+                return true;
+            };
+            
+            const clearFieldError = (field) => {
+                const errorElement = document.getElementById(`${field.id}-error`);
+                field.classList.remove('error');
+                errorElement.style.display = 'none';
+            };
+            
+            const validateForm = () => {
+                let isValid = true;
+                
+                formInputs.forEach(input => {
+                    if (!validateField(input)) {
+                        isValid = false;
                     }
                 });
-            }
+                
+                return isValid;
+            };
+
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                if (!validateForm()) {
+                    formStatus.textContent = 'Por favor, complete todos los campos correctamente.';
+                    formStatus.className = 'mt-4 text-center text-sm font-semibold text-red-500';
+                    return;
+                }
+
+                // Mostrar estado de carga
+                submitText.textContent = 'ENVIANDO...';
+                submitSpinner.classList.remove('hidden');
+                submitBtn.disabled = true;
+                formStatus.textContent = 'Enviando...';
+                formStatus.className = 'mt-4 text-center text-sm font-semibold text-gray-400';
+
+                const name = document.getElementById('form-name').value;
+                const email = document.getElementById('form-email').value;
+                const message = document.getElementById('form-message').value;
+
+                try {
+                    const userId = auth.currentUser?.uid || 'anonymous';
+                    const docRef = await addDoc(collection(db, `artifacts/${appId}/users/${userId}/contact_messages`), {
+                        name: name,
+                        email: email,
+                        message: message,
+                        timestamp: new Date()
+                    });
+                    
+                    formStatus.textContent = '¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.';
+                    formStatus.className = 'mt-4 text-center text-sm font-semibold text-green-500';
+                    contactForm.reset();
+                    
+                    // Restablecer estilos de los campos
+                    formInputs.forEach(input => {
+                        input.classList.remove('success');
+                    });
+                    
+                    console.log("Documento escrito con ID: ", docRef.id);
+                } catch (e) {
+                    formStatus.textContent = 'Error al enviar el mensaje. Intente de nuevo más tarde.';
+                    formStatus.className = 'mt-4 text-center text-sm font-semibold text-red-500';
+                    console.error("Error adding document: ", e);
+                } finally {
+                    // Restaurar estado del botón
+                    submitText.textContent = 'ENVIAR MENSAJE';
+                    submitSpinner.classList.add('hidden');
+                    submitBtn.disabled = false;
+                }
+            });
         });
     </script>
 </body>
