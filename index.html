@@ -1,20 +1,27 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La Casa de las Cortinas - Diseño de Vanguardia</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Preconexiones para mejorar rendimiento -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://www.gstatic.com">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary-bg: #101010;
             --secondary-bg: #181818;
+            --accent-color: #4A5568;
             --text-primary: #e5e5e5;
             --text-secondary: #9CA3AF;
-            --accent: #25d366;
+            --success-color: #10B981;
+            --error-color: #EF4444;
         }
         
         body {
@@ -77,7 +84,7 @@
         
         .collection-card:hover {
             transform: translateY(-8px);
-            border-color: #4A5568;
+            border-color: var(--accent-color);
         }
         
         .collection-card:hover .icon {
@@ -115,28 +122,29 @@
             transform: translateY(0);
         }
         
-        /* Animación de cortinas simplificada para mejor rendimiento */
-        .curtain-animation {
-            display: flex;
-            justify-content: center;
-            gap: 4px;
-            height: 100px;
-        }
-        
-        .curtain-panel {
-            width: 8px;
-            background-color: var(--text-secondary);
+        .animated-line {
+            stroke: var(--text-secondary);
+            stroke-width: 2;
+            stroke-linecap: round;
             transform-origin: top;
-            animation: draw-curtain 4s ease-in-out infinite alternate;
+            animation: draw-curtain 6s ease-in-out infinite alternate;
         }
         
         @keyframes draw-curtain { 
-            from { transform: scaleY(0.2); } 
+            from { transform: scaleY(0); } 
             to { transform: scaleY(1); } 
         }
         
-        .curtain-panel:nth-child(odd) { animation-delay: 0.5s; }
-        
+        .animated-line:nth-child(1) { animation-delay: 0s; }
+        .animated-line:nth-child(2) { animation-delay: 0.2s; }
+        .animated-line:nth-child(3) { animation-delay: 0.4s; }
+        .animated-line:nth-child(4) { animation-delay: 0.6s; }
+        .animated-line:nth-child(5) { animation-delay: 0.8s; }
+        .animated-line:nth-child(6) { animation-delay: 1s; }
+        .animated-line:nth-child(7) { animation-delay: 1.2s; }
+        .animated-line:nth-child(8) { animation-delay: 1.4s; }
+        .animated-line:nth-child(9) { animation-delay: 1.6s; }
+
         /* Modal Styles */
         .modal {
             opacity: 0;
@@ -157,7 +165,7 @@
         .modal.open .modal-content {
             transform: scale(1);
         }
-        
+
         /* WhatsApp Floating Button */
         .whatsapp-float {
             position: fixed;
@@ -165,7 +173,7 @@
             height: 60px;
             bottom: 40px;
             right: 40px;
-            background-color: var(--accent);
+            background-color: #25d366;
             color: #FFF;
             border-radius: 50px;
             text-align: center;
@@ -182,7 +190,7 @@
         .whatsapp-float:hover {
             transform: scale(1.1);
         }
-        
+
         @keyframes whatsapp-pulse {
             0% {
                 box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
@@ -225,7 +233,7 @@
             background: rgba(0, 0, 0, 0.3);
             z-index: 1;
         }
-        
+
         .collaboration-banner .content {
             position: relative;
             z-index: 2;
@@ -240,45 +248,101 @@
             }
         }
         
-        /* Mejoras de accesibilidad */
-        button:focus, 
-        a:focus {
-            outline: 2px solid white;
-            outline-offset: 2px;
+        /* Form button */
+        #submit-btn {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
         }
         
-        input:focus, 
-        textarea:focus {
-            outline: 2px solid #4A5568;
-            outline-offset: -2px;
+        #submit-btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-color);
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
         }
         
-        /* Mejoras para móviles */
-        @media (max-width: 768px) {
-            .hero-section h1 {
-                font-size: 3.5rem;
-            }
-            
-            .nav-link {
-                font-size: 2.5rem;
-            }
-            
-            .whatsapp-float {
-                width: 50px;
-                height: 50px;
-                bottom: 20px;
-                right: 20px;
-            }
+        #submit-btn:hover:before {
+            transform: scaleX(1);
         }
         
-        /* Estados de validación del formulario */
+        /* Loading spinner */
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            display: inline-block;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Form validation styles */
         .form-input.error {
-            border-color: #e53e3e;
+            border-color: var(--error-color);
         }
         
         .form-input.success {
-            border-color: #38a169;
+            border-color: var(--success-color);
         }
+        
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        
+        /* Focus styles for accessibility */
+        button:focus,
+        a:focus,
+        input:focus,
+        textarea:focus {
+            outline: 2px solid #fff;
+            outline-offset: 2px;
+        }
+        
+        /* Reduced motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* Message Box for alerts */
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--secondary-bg);
+            color: var(--text-primary);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+            text-align: center;
+        }
+
     </style>
 </head>
 <body class="bg-[#101010]">
@@ -286,20 +350,15 @@
     <!-- Header & Navigation -->
     <header class="fixed top-0 left-0 w-full z-50 p-6 md:p-8">
         <div class="container mx-auto flex justify-between items-center">
-            <a href="#" class="text-xl md:text-2xl font-bold tracking-wider">La Casa de las Cortinas</a>
-            <button id="menu-button" class="z-50" aria-label="Abrir menú de navegación">
+            <a href="#" class="text-xl md:text-2xl font-bold tracking-wider" aria-label="La Casa de las Cortinas - Inicio">La Casa de las Cortinas</a>
+            <button id="menu-button" class="z-50" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="nav-overlay">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
             </button>
         </div>
     </header>
 
     <!-- Fullscreen Navigation Overlay -->
-    <div id="nav-overlay" class="nav-overlay fixed inset-0 bg-black/95 backdrop-blur-lg z-40 flex items-center justify-center">
-        <button id="close-menu" class="absolute top-6 right-6 text-white z-50" aria-label="Cerrar menú">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-        </button>
+    <div id="nav-overlay" class="nav-overlay fixed inset-0 bg-black/95 backdrop-blur-lg z-40 flex items-center justify-center" role="navigation" aria-label="Menú principal">
         <nav class="flex flex-col items-center space-y-8 text-center">
             <a href="#inicio" class="nav-link text-4xl md:text-6xl font-bold hover:text-gray-400 transition-colors" style="transition-delay: 100ms;">Inicio</a>
             <a href="#colecciones" class="nav-link text-4xl md:text-6xl font-bold hover:text-gray-400 transition-colors" style="transition-delay: 200ms;">Colecciones</a>
@@ -314,13 +373,13 @@
         <!-- Hero Section -->
         <section id="inicio" class="hero-section">
             <div class="slide active" style="background-image:url('https://images.unsplash.com/photo-1595343477546-b384d8583594?q=80&w=2070&auto=format&fit=crop')">
-                 <div class="relative z-10 container mx-auto px-6">
+                <div class="relative z-10 container mx-auto px-6">
                     <h1 class="text-5xl md:text-8xl lg:text-9xl font-extrabold text-white leading-none">LUZ & FORMA</h1>
                     <p class="mt-4 text-lg md:text-2xl text-gray-300 max-w-3xl mx-auto font-light">Redefinimos tus espacios con cortinas y toldos de diseño superior.</p>
                 </div>
             </div>
             <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1629177281238-5804a4563a0a?q=80&w=1974&auto=format&fit=crop')">
-                 <div class="relative z-10 container mx-auto px-6">
+                <div class="relative z-10 container mx-auto px-6">
                     <h1 class="text-5xl md:text-8xl lg:text-9xl font-extrabold text-white leading-none">CONTROL TOTAL</h1>
                     <p class="mt-4 text-lg md:text-2xl text-gray-300 max-w-3xl mx-auto font-light">Experimente el confort de la automatización en su hogar.</p>
                 </div>
@@ -336,32 +395,32 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Producto: Roller -->
-                    <div class="collection-card bg-[#181818] p-8 rounded-lg border border-gray-800 flex flex-col items-center justify-center text-center reveal" data-product="roller">
+                    <div class="collection-card bg-[#181818] p-8 rounded-lg border border-gray-800 flex flex-col items-center justify-center text-center reveal" data-product="roller" role="button" tabindex="0" aria-label="Ver detalles de Cortinas Roller">
                         <svg class="w-16 h-16 mb-6 text-gray-400 icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 12l8.954-8.955a1.125 1.125 0 011.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H18.375a1.125 1.125 0 001.125-1.125V9.75M8.25 21h7.5"></path></svg>
                         <h3 class="text-2xl text-white">Roller</h3>
                     </div>
                     <!-- Producto: Bandas Verticales -->
-                    <div class="collection-card bg-[#181818] p-8 rounded-lg border border-gray-800 flex flex-col items-center justify-center text-center reveal" data-product="bandas" style="transition-delay: 100ms;">
+                    <div class="collection-card bg-[#181818] p-8 rounded-lg border border-gray-800 flex flex-col items-center justify-center text-center reveal" data-product="bandas" style="transition-delay: 100ms;" role="button" tabindex="0" aria-label="Ver detalles de Bandas Verticales">
                         <svg class="w-16 h-16 mb-6 text-gray-400 icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 3v18M10 3v18M14 3v18M18 3v18"></path></svg>
                         <h3 class="text-2xl text-white">Bandas Verticales</h3>
                     </div>
                     <!-- Producto: Venecianas -->
-                    <div class="collection-card bg-[#181818] p-8 rounded-lg border border-gray-800 flex flex-col items-center justify-center text-center reveal" data-product="venecianas" style="transition-delay: 200ms;">
+                    <div class="collection-card bg-[#181818] p-8 rounded-lg border border-gray-800 flex flex-col items-center justify-center text-center reveal" data-product="venecianas" style="transition-delay: 200ms;" role="button" tabindex="0" aria-label="Ver detalles de Cortinas Venecianas">
                         <svg class="w-16 h-16 mb-6 text-gray-400 icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path></svg>
                         <h3 class="text-2xl text-white">Venecianas</h3>
                     </div>
                     <!-- Producto: Confeccionadas -->
-                    <div class="collection-card bg-[#181818] p-8 rounded-lg border border-gray-800 flex flex-col items-center justify-center text-center reveal" data-product="confeccionadas" style="transition-delay: 300ms;">
+                    <div class="collection-card bg-[#181818] p-8 rounded-lg border border-gray-800 flex flex-col items-center justify-center text-center reveal" data-product="confeccionadas" style="transition-delay: 300ms;" role="button" tabindex="0" aria-label="Ver detalles de Cortinas Confeccionadas">
                         <svg class="w-16 h-16 mb-6 text-gray-400 icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 4v16M21 4v16M3 4h3a4 4 0 014 4v8a4 4 0 01-4 4H3m18 0h-3a4 4 0 01-4-4V8a4 4 0 014-4h3"></path></svg>
                         <h3 class="text-2xl text-white">Confeccionadas</h3>
                     </div>
                     <!-- Producto: Toldos -->
-                    <div class="collection-card bg-[#181818] p-8 rounded-lg border border-gray-800 flex flex-col items-center justify-center text-center reveal" data-product="toldos" style="transition-delay: 400ms;">
+                    <div class="collection-card bg-[#181818] p-8 rounded-lg border border-gray-800 flex flex-col items-center justify-center text-center reveal" data-product="toldos" style="transition-delay: 400ms;" role="button" tabindex="0" aria-label="Ver detalles de Toldos">
                         <svg class="w-16 h-16 mb-6 text-gray-400 icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15.75h18"></path></svg>
                         <h3 class="text-2xl text-white">Toldos</h3>
                     </div>
                     <!-- Producto: Automatización -->
-                    <div class="collection-card bg-[#181818] p-8 rounded-lg border border-gray-800 flex flex-col items-center justify-center text-center reveal" data-product="automatizacion" style="transition-delay: 500ms;">
+                    <div class="collection-card bg-[#181818] p-8 rounded-lg border border-gray-800 flex flex-col items-center justify-center text-center reveal" data-product="automatizacion" style="transition-delay: 500ms;" role="button" tabindex="0" aria-label="Ver detalles de Automatización">
                         <svg class="w-16 h-16 mb-6 text-gray-400 icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" /><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6.75h.008v.008h-.008v-.008z" /></svg>
                         <h3 class="text-2xl text-white">Automatización</h3>
                         <a href="http://www.x1.com.ar" target="_blank" class="text-orange-400 font-bold mt-2 text-lg hover:underline transition-colors duration-300">by X-1 Hogar Inteligente</a>
@@ -393,15 +452,9 @@
                     <a href="#contacto" class="text-white font-semibold border-b border-gray-500 pb-1 hover:border-white transition-colors">Iniciar un Proyecto &rarr;</a>
                 </div>
                 <div class="md:w-1/2 flex justify-center items-center p-8 reveal" style="transition-delay: 200ms;">
-                    <div class="curtain-animation">
-                        <div class="curtain-panel"></div>
-                        <div class="curtain-panel"></div>
-                        <div class="curtain-panel"></div>
-                        <div class="curtain-panel"></div>
-                        <div class="curtain-panel"></div>
-                        <div class="curtain-panel"></div>
-                        <div class="curtain-panel"></div>
-                    </div>
+                    <svg class="w-full max-w-xs" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <line class="animated-line" x1="10" y1="0" x2="10" y2="100" /><line class="animated-line" x1="20" y1="0" x2="20" y2="100" /><line class="animated-line" x1="30" y1="0" x2="30" y2="100" /><line class="animated-line" x1="40" y1="0" x2="40" y2="100" /><line class="animated-line" x1="50" y1="0" x2="50" y2="100" /><line class="animated-line" x1="60" y1="0" x2="60" y2="100" /><line class="animated-line" x1="70" y1="0" x2="70" y2="100" /><line class="animated-line" x1="80" y1="0" x2="80" y2="100" /><line class="animated-line" x1="90" y1="0" x2="90" y2="100" />
+                    </svg>
                 </div>
             </div>
         </section>
@@ -410,7 +463,9 @@
         <section id="profesionales" class="py-24 md:py-32 bg-black">
             <div class="container mx-auto px-6 md:px-8 flex flex-col md:flex-row-reverse items-center gap-12 md:gap-20">
                 <div class="md:w-1/2 reveal">
-                    <!-- Espacio para imagen o contenido visual -->
+                    <svg class="w-full max-w-xs" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <line class="animated-line" x1="10" y1="0" x2="10" y2="100" /><line class="animated-line" x1="20" y1="0" x2="20" y2="100" /><line class="animated-line" x1="30" y1="0" x2="30" y2="100" /><line class="animated-line" x1="40" y1="0" x2="40" y2="100" /><line class="animated-line" x1="50" y1="0" x2="50" y2="100" /><line class="animated-line" x1="60" y1="0" x2="60" y2="100" /><line class="animated-line" x1="70" y1="0" x2="70" y2="100" /><line class="animated-line" x1="80" y1="0" x2="80" y2="100" /><line class="animated-line" x1="90" y1="0" x2="90" y2="100" />
+                    </svg>
                 </div>
                 <div class="md:w-1/2 text-left reveal" style="transition-delay: 200ms;">
                     <h2 class="text-5xl md:text-7xl mb-6">ESPACIO PROFESIONAL</h2>
@@ -439,23 +494,26 @@
                     </a>
                 </div>
 
-                <form id="contact-form" class="max-w-2xl mx-auto reveal">
+                <form id="contact-form" class="max-w-2xl mx-auto reveal" novalidate>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div>
-                            <input type="text" id="form-name" placeholder="Nombre" class="form-input bg-transparent border-b border-gray-700 p-3 w-full focus:outline-none focus:border-gray-300 transition-colors">
-                            <p id="name-error" class="text-red-500 text-sm mt-1 hidden">Por favor ingresa tu nombre</p>
+                            <input type="text" id="form-name" placeholder="Nombre" class="form-input bg-transparent border-b border-gray-700 p-3 w-full focus:outline-none focus:border-gray-300 transition-colors" required>
+                            <div class="error-message" id="name-error">Por favor ingrese su nombre</div>
                         </div>
                         <div>
-                            <input type="email" id="form-email" placeholder="Email" class="form-input bg-transparent border-b border-gray-700 p-3 w-full focus:outline-none focus:border-gray-300 transition-colors">
-                            <p id="email-error" class="text-red-500 text-sm mt-1 hidden">Por favor ingresa un email válido</p>
+                            <input type="email" id="form-email" placeholder="Email" class="form-input bg-transparent border-b border-gray-700 p-3 w-full focus:outline-none focus:border-gray-300 transition-colors" required>
+                            <div class="error-message" id="email-error">Por favor ingrese un email válido</div>
                         </div>
                     </div>
                     <div class="mb-8">
-                        <textarea id="form-message" placeholder="Mensaje..." class="form-input bg-transparent border-b border-gray-700 p-3 w-full h-24 focus:outline-none focus:border-gray-300 transition-colors"></textarea>
-                        <p id="message-error" class="text-red-500 text-sm mt-1 hidden">Por favor ingresa tu mensaje</p>
+                        <textarea id="form-message" placeholder="Mensaje..." class="form-input bg-transparent border-b border-gray-700 p-3 w-full h-24 focus:outline-none focus:border-gray-300 transition-colors" required></textarea>
+                        <div class="error-message" id="message-error">Por favor ingrese un mensaje</div>
                     </div>
                     <div>
-                        <button type="submit" id="submit-btn" class="bg-white text-black font-bold py-4 px-12 rounded-full hover:bg-gray-300 transition-colors duration-300 tracking-widest">ENVIAR A WHATSAPP</button>
+                        <button type="submit" id="submit-btn" class="bg-white text-black font-bold py-4 px-12 rounded-full hover:bg-gray-300 transition-colors duration-300 tracking-widest flex items-center justify-center">
+                            <span id="submit-text">ENVIAR MENSAJE</span>
+                            <span id="submit-spinner" class="spinner hidden"></span>
+                        </button>
                     </div>
                     <p id="form-status" class="mt-4 text-center text-sm font-semibold"></p>
                 </form>
@@ -473,7 +531,7 @@
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"></path></svg>
                     </a>
                     <a href="https://wa.me/5493412687230" target="_blank" aria-label="WhatsApp" class="text-gray-500 hover:text-green-500 transition-colors">
-                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.38 1.25 4.82l-1.34 4.92 5.04-1.32c1.39.71 2.97 1.12 4.63 1.12h.01c5.46 0 9.91-4.45 9.91-9.91s-4.45-9.91-9.91-9.91zM17.47 14.38c-.2-.1-.72-.36-1.18-.56-.27-.12-.49-.18-.69.18-.18.36-.45.71-.55.81-.1.1-.2.12-.38.06-.56-.2-1.32-.48-2.22-1.21-.7-.56-1.17-1.24-1.31-1.46-.12-.22-.01-.34.09-.45.09-.09.2-.24.3-.36.1-.12.15-.2.22-.34.07-.12.04-.24-.02-.36-.06-.12-.69-1.65-.94-2.26-.25-.6-.5-.52-.69-.52-.18-.01-.38-.01-.58-.01-.2 0-.52.07-.79.34-.27.27-.94.91-1.22 2.16-.27 1.25.2 2.31.34 2.47.14.18.94 1.52 2.82 2.59 1.52.86 2.02 1.05 2.57 1.15.55.1 1.04.09 1.42-.06.42-.18.71-.79.94-1.52.22-.72.22-1.34.16-1.46z"></path></svg>
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.38 1.25 4.82l-1.34 4.92 5.04-1.32c1.39.71 2.97 1.12 4.63 1.12h.01c5.46 0 9.91-4.45 9.91-9.91s-4.45-9.91-9.91-9.91zM17.47 14.38c-.2-.1-.72-.36-1.18-.56-.27-.12-.49-.18-.69.18-.18.36-.45.71-.55.81-.1.1-.2.12-.38.06-.56-.2-1.32-.48-2.22-1.21-.7-.56-1.17-1.24-1.31-1.46-.12-.22-.01-.34.09-.45.09-.09.2-.24.3-.36.1-.12.15-.2.22-.34.07-.12.04-.24-.02-.36-.06-.12-.69-1.65-.94-2.26-.25-.6-.5-.52-.69-.52-.18-.01-.38-.01-.58-.01-.2 0-.52.07-.79.34-.27.27-.94.91-1.22 2.16-.27 1.25.2 2.31.34 2.47.14.18.94 1.52 2.82 2.59 1.52.86 2.02 1.05 2.57 1.15.55.1 1.04.09 1.42-.06.42-.18.71-.79.94-1.52.22-.72.22-1.34.16-1.46z"></path></svg>
                     </a>
                 </div>
                 <p class="text-gray-600 text-sm">&copy; 2024 La Casa de las Cortinas. Todos los derechos reservados.</p>
@@ -487,7 +545,7 @@
     </a>
 
     <!-- Modal -->
-    <div id="product-modal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div id="product-modal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <div id="modal-content" class="modal-content bg-[#181818] rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto flex flex-col md:flex-row relative">
             <button id="close-modal" class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors" aria-label="Cerrar modal">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -504,315 +562,296 @@
         </div>
     </div>
 
-    <script type="module">
-        // Importa las librerías de Firebase
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    <!-- Message Box -->
+    <div id="message-box" class="message-box">
+        <p id="message-text" class="mb-4"></p>
+        <button id="message-box-close" class="bg-white text-black font-bold py-2 px-6 rounded-full">Cerrar</button>
+    </div>
 
-        // Configuración de Firebase (proporcionada por el entorno)
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
 
-        // Inicializa Firebase y sus servicios
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth(app);
-        
-        // Log para ver el estado de la conexión
-        setLogLevel('debug');
-
-        // Autentica al usuario al cargar la página
-        const authenticate = async () => {
-            try {
-                if (typeof __initial_auth_token !== 'undefined') {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-                console.log("Autenticación exitosa.");
-            } catch (error) {
-                console.error("Error de autenticación:", error);
+        // --- Data for the Product Modal ---
+        const products = {
+            roller: {
+                title: "Cortinas Roller",
+                description: "Las cortinas Roller son la solución ideal para el control de luz y privacidad, con un diseño minimalista y moderno. Disponibles en una amplia gama de telas y texturas, incluyendo Blackout, Sunscreen y Duo.",
+                features: [
+                    "Diseño minimalista y limpio",
+                    "Fácil mantenimiento y limpieza",
+                    "Control de luz personalizable",
+                    "Materiales de alta durabilidad",
+                    "Variedad de colores y texturas"
+                ],
+                image: "https://images.unsplash.com/photo-1582259160533-5c7438e21ac8?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            },
+            bandas: {
+                title: "Bandas Verticales",
+                description: "Ofrecen un control de luz preciso y elegante, perfectas para grandes ventanales. Sus lamas verticales permiten un giro de 180° para regular la entrada de luz y crear ambientes únicos.",
+                features: [
+                    "Control de luz y visibilidad preciso",
+                    "Ideal para grandes ventanales y puertas correderas",
+                    "Apertura lateral o central",
+                    "Fácil instalación y manejo"
+                ],
+                image: "https://images.unsplash.com/photo-1629177281238-5804a4563a0a?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            },
+            venecianas: {
+                title: "Cortinas Venecianas",
+                description: "Un clásico reinventado, las cortinas venecianas son versátiles y funcionales, permitiendo un control total sobre la luz y la privacidad. Disponibles en aluminio, madera y PVC.",
+                features: [
+                    "Lamas ajustables para control total de luz",
+                    "Resistencia y durabilidad",
+                    "Fácil de limpiar",
+                    "Amplia gama de colores y acabados"
+                ],
+                image: "https://images.unsplash.com/photo-1548651817-f584e03d3f98?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            },
+            confeccionadas: {
+                title: "Cortinas Confeccionadas",
+                description: "Diseñadas a medida para un ajuste perfecto, nuestras cortinas confeccionadas aportan calidez y estilo a cualquier espacio. Elija entre una variedad de telas, estilos y acabados.",
+                features: [
+                    "100% personalizables",
+                    "Gran variedad de tejidos y diseños",
+                    "Ambientes acogedores y elegantes",
+                    "Confección artesanal y de alta calidad"
+                ],
+                image: "https://images.unsplash.com/photo-1595343477546-b384d8583594?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            },
+            toldos: {
+                title: "Toldos",
+                description: "Protección solar y estilo para tus espacios exteriores. Nuestros toldos ofrecen una solución eficiente para reducir el calor y proteger del sol, creando ambientes confortables en balcones, terrazas y jardines.",
+                features: [
+                    "Protección UV y reducción de calor",
+                    "Diversos mecanismos (brazo invisible, cofre, etc.)",
+                    "Resistencia a la intemperie",
+                    "Tejidos de alta calidad"
+                ],
+                image: "https://images.unsplash.com/photo-1631481977717-b649520a454d?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            },
+            automatizacion: {
+                title: "Automatización",
+                description: "El futuro en tus manos. Automatiza tus cortinas y toldos para un confort total. Controla la luz de tu hogar con un solo click, desde tu teléfono o con comandos de voz, integrando tus cortinas a tu hogar inteligente.",
+                features: [
+                    "Control remoto, desde app móvil o por voz",
+                    "Programación de horarios",
+                    "Sistemas silenciosos y eficientes",
+                    "Integración con sistemas domóticos (ej. Google Home, Alexa)"
+                ],
+                image: "https://images.unsplash.com/photo-1628178652316-f6d21394c502?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             }
         };
 
-        // Funciones de utilidad
-        const validateEmail = (email) => {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
+        // --- Utility Functions ---
+        const showMessageBox = (message) => {
+            const messageBox = document.getElementById('message-box');
+            const messageText = document.getElementById('message-text');
+            messageText.textContent = message;
+            messageBox.style.display = 'block';
         };
 
-        const showError = (element, message) => {
-            const errorElement = document.getElementById(`${element}-error`);
-            if (errorElement) {
-                errorElement.textContent = message;
-                errorElement.classList.remove('hidden');
-            }
-            document.getElementById(element).classList.add('error');
-            document.getElementById(element).classList.remove('success');
+        const closeMessageBox = () => {
+            const messageBox = document.getElementById('message-box');
+            messageBox.style.display = 'none';
         };
 
-        const clearError = (element) => {
-            const errorElement = document.getElementById(`${element}-error`);
-            if (errorElement) {
-                errorElement.classList.add('hidden');
-            }
-            document.getElementById(element).classList.remove('error');
-            document.getElementById(element).classList.add('success');
-        };
+        // --- Initialize Functions ---
 
-        // Inicialización cuando el DOM está listo
-        document.addEventListener('DOMContentLoaded', function () {
-            // Llama a la función de autenticación
-            authenticate();
-
-            // --- Navigation Logic ---
-            const menuButton = document.getElementById('menu-button');
-            const closeMenuButton = document.getElementById('close-menu');
-            const navOverlay = document.getElementById('nav-overlay');
-            const navLinks = navOverlay.querySelectorAll('a');
-            
-            const toggleMenu = () => {
-                navOverlay.classList.toggle('open');
-                document.body.style.overflow = navOverlay.classList.contains('open') ? 'hidden' : '';
-            };
-            
-            menuButton.addEventListener('click', toggleMenu);
-            closeMenuButton.addEventListener('click', toggleMenu);
-            
-            // Cerrar menú al hacer clic fuera del contenido
-            navOverlay.addEventListener('click', (e) => {
-                if (e.target === navOverlay) toggleMenu();
-            });
-            
-            navLinks.forEach(link => {
-                link.addEventListener('click', toggleMenu);
-            });
-
-            // --- Slider Logic ---
+        // Hero Slider
+        function initSlider() {
             const slides = document.querySelectorAll('.slide');
             let currentSlide = 0;
-            if (slides.length > 0) {
-                setInterval(() => {
-                    slides[currentSlide].classList.remove('active');
-                    currentSlide = (currentSlide + 1) % slides.length;
-                    slides[currentSlide].classList.add('active');
-                }, 5000); // Cambia cada 5 segundos
-            }
 
-            // --- Scroll Reveal Logic ---
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 5000); // Cambia de slide cada 5 segundos
+        }
+
+        // Navigation Menu
+        function initNav() {
+            const menuButton = document.getElementById('menu-button');
+            const navOverlay = document.getElementById('nav-overlay');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            menuButton.addEventListener('click', () => {
+                const isExpanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
+                menuButton.setAttribute('aria-expanded', !isExpanded);
+                navOverlay.classList.toggle('open');
+                document.body.classList.toggle('overflow-hidden');
+            });
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navOverlay.classList.remove('open');
+                    menuButton.setAttribute('aria-expanded', 'false');
+                    document.body.classList.remove('overflow-hidden');
+                });
+            });
+        }
+
+        // Product Modal
+        function initModal() {
+            const productCards = document.querySelectorAll('.collection-card');
+            const modal = document.getElementById('product-modal');
+            const closeModalBtn = document.getElementById('close-modal');
+            const modalImage = document.getElementById('modal-image');
+            const modalTitle = document.getElementById('modal-title');
+            const modalDescription = document.getElementById('modal-description');
+            const modalFeatures = document.getElementById('modal-features');
+
+            // Opens the modal with the correct product info
+            productCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const productId = card.getAttribute('data-product');
+                    const product = products[productId];
+                    
+                    if (product) {
+                        modalImage.src = product.image;
+                        modalImage.alt = product.title;
+                        modalTitle.textContent = product.title;
+                        modalDescription.textContent = product.description;
+                        modalFeatures.innerHTML = '';
+                        product.features.forEach(feature => {
+                            const li = document.createElement('li');
+                            li.textContent = feature;
+                            modalFeatures.appendChild(li);
+                        });
+                        modal.classList.add('open');
+                        document.body.classList.add('overflow-hidden');
+                    }
+                });
+            });
+
+            // Closes the modal
+            closeModalBtn.addEventListener('click', () => {
+                modal.classList.remove('open');
+                document.body.classList.remove('overflow-hidden');
+            });
+
+            // Closes modal when clicking outside
+            modal.addEventListener('click', (e) => {
+                if (e.target.id === 'product-modal') {
+                    modal.classList.remove('open');
+                    document.body.classList.remove('overflow-hidden');
+                }
+            });
+        }
+
+        // Contact Form
+        function initForm() {
+            const form = document.getElementById('contact-form');
+            const nameInput = document.getElementById('form-name');
+            const emailInput = document.getElementById('form-email');
+            const messageInput = document.getElementById('form-message');
+            const nameError = document.getElementById('name-error');
+            const emailError = document.getElementById('email-error');
+            const messageError = document.getElementById('message-error');
+            const submitBtn = document.getElementById('submit-btn');
+            const submitText = document.getElementById('submit-text');
+            const submitSpinner = document.getElementById('submit-spinner');
+            const formStatus = document.getElementById('form-status');
+
+            const validateEmail = (email) => {
+                const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(String(email).toLowerCase());
+            };
+
+            const toggleLoading = (isLoading) => {
+                if (isLoading) {
+                    submitText.textContent = '';
+                    submitSpinner.classList.remove('hidden');
+                    submitBtn.disabled = true;
+                } else {
+                    submitText.textContent = 'ENVIAR MENSAJE';
+                    submitSpinner.classList.add('hidden');
+                    submitBtn.disabled = false;
+                }
+            };
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                let isValid = true;
+
+                // Reset errors
+                nameError.style.display = 'none';
+                emailError.style.display = 'none';
+                messageError.style.display = 'none';
+                nameInput.classList.remove('error');
+                emailInput.classList.remove('error');
+                messageInput.classList.remove('error');
+                formStatus.textContent = '';
+                formStatus.classList.remove('text-green-500', 'text-red-500');
+
+                // Validate fields
+                if (nameInput.value.trim() === '') {
+                    nameInput.classList.add('error');
+                    nameError.style.display = 'block';
+                    isValid = false;
+                }
+                if (!validateEmail(emailInput.value)) {
+                    emailInput.classList.add('error');
+                    emailError.style.display = 'block';
+                    isValid = false;
+                }
+                if (messageInput.value.trim() === '') {
+                    messageInput.classList.add('error');
+                    messageError.style.display = 'block';
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    toggleLoading(true);
+
+                    // Simulate form submission
+                    setTimeout(() => {
+                        toggleLoading(false);
+                        formStatus.textContent = '¡Gracias por su mensaje! Nos pondremos en contacto pronto.';
+                        formStatus.classList.add('text-green-500');
+                        form.reset();
+                    }, 2000);
+                }
+            });
+        }
+
+        // Intersection Observer for animations
+        function initReveal() {
             const revealElements = document.querySelectorAll('.reveal');
-            const observer = new IntersectionObserver((entries) => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.2
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.1 });
-            
+            }, observerOptions);
+
             revealElements.forEach(el => observer.observe(el));
+        }
 
-            // --- Modal Logic ---
-            const productData = {
-                roller: { 
-                    title: "Cortinas Roller", 
-                    image: "https://images.unsplash.com/photo-1593339798364-c869212a865a?q=80&w=1964&auto=format&fit=crop", 
-                    description: "La solución perfecta para un control de luz preciso y un estilo minimalista. Su diseño limpio y funcional se adapta a cualquier ambiente moderno.", 
-                    features: ["Telas Blackout, Sunscreen y decorativas.", "Control total de la privacidad y la luz solar.", "Mecanismos manuales o motorizados.", "Fácil limpieza y mantenimiento."] 
-                },
-                bandas: { 
-                    title: "Bandas Verticales", 
-                    image: "https://images.unsplash.com/photo-1617362328412-c0527555f2a8?q=80&w=1974&auto=format&fit=crop", 
-                    description: "Ideales para grandes ventanales y puertas corredizas, las bandas verticales ofrecen una elegancia versátil y un control excepcional del ingreso de luz.", 
-                    features: ["Láminas giratorias de hasta 180 grados.", "Disponibles en una amplia gama de telas y texturas.", "Solución ideal para paños de grandes dimensiones.", "Aportan una sensación de altura a los espacios."] 
-                },
-                venecianas: { 
-                    title: "Cortinas Venecianas", 
-                    image: "https://images.unsplash.com/photo-1618220252344-8ec9167299a8?q=80&w=1974&auto=format&fit=crop", 
-                    description: "Un clásico atemporal que permite un juego de luces y sombras inigualable. Perfectas para crear ambientes íntimos y elegantes.", 
-                    features: ["Fabricadas en aluminio de alta resistencia o madera natural.", "Control preciso de la orientación de las láminas.", "Disponibles en múltiples anchos y acabados.", "Alta durabilidad y fácil mantenimiento."] 
-                },
-                confeccionadas: { 
-                    title: "Cortinas Confeccionadas", 
-                    image: "https://images.unsplash.com/photo-1542674558-6ebd422de082?q=80&w=1974&auto=format&fit=crop", 
-                    description: "Aportan calidez, textura y sofisticación. Cada cortina se confecciona artesanalmente para lograr una caída y terminaciones perfectas.", 
-                    features: ["Selección premium de telas: lino, gasa, terciopelo y más.", "Diseños a medida: pliegues, tablas, ojetillos.", "Terminaciones artesanales de alta costura.", "Aislamiento térmico y acústico superior."] 
-                },
-                toldos: { 
-                    title: "Toldos", 
-                    image: "https://images.unsplash.com/photo-1600585152220-088258f7d9d2?q=80&w=2070&auto=format&fit=crop", 
-                    description: "Amplíe y proteja sus espacios exteriores con estilo. Nuestros toldos ofrecen una protección solar eficaz sin sacrificar el diseño.", 
-                    features: ["Sistemas de brazos invisibles, verticales y de proyección.", "Lonas acrílicas con tratamiento UV de alta resistencia.", "Estructuras de aluminio robustas y duraderas.", "Opciones de accionamiento manual o motorizado."] 
-                },
-                automatizacion: { 
-                    title: "Automatización", 
-                    image: "https://images.unsplash.com/photo-1588595053293-374145f47079?q=80&w=1974&auto=format&fit=crop", 
-                    description: "Integre el máximo confort y tecnología en su hogar. Controle todas sus cortinas y toldos con un solo toque o por comando de voz.", 
-                    features: ["Motores ultra silenciosos de última generación.", "Control a través de control remoto, aplicación móvil o asistentes de voz.", "Programación de escenas y horarios.", "Integración completa con sistemas de domótica existentes."] 
-                }
-            };
+        function initMessageBox() {
+            const closeBtn = document.getElementById('message-box-close');
+            closeBtn.addEventListener('click', closeMessageBox);
+        }
 
-            const modal = document.getElementById('product-modal');
-            const closeModalBtn = document.getElementById('close-modal');
-            const collectionCards = document.querySelectorAll('.collection-card');
+        // --- Call all initialization functions ---
+        initSlider();
+        initNav();
+        initModal();
+        initForm();
+        initReveal();
+        initMessageBox();
 
-            const openModal = (productId) => {
-                const data = productData[productId];
-                document.getElementById('modal-image').src = data.image;
-                document.getElementById('modal-image').alt = data.title;
-                document.getElementById('modal-title').textContent = data.title;
-                document.getElementById('modal-description').textContent = data.description;
-                
-                const featuresList = document.getElementById('modal-features');
-                featuresList.innerHTML = '';
-                
-                data.features.forEach(feature => {
-                    const li = document.createElement('li');
-                    li.textContent = feature;
-                    featuresList.appendChild(li);
-                });
-                
-                modal.classList.add('open');
-                document.body.style.overflow = 'hidden';
-            };
+    });
+</script>
 
-            const closeModal = () => {
-                modal.classList.remove('open');
-                document.body.style.overflow = '';
-            };
-
-            collectionCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    const productId = card.dataset.product;
-                    openModal(productId);
-                });
-            });
-
-            closeModalBtn.addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeModal();
-            });
-
-            // --- Form Validation & Submission Logic ---
-            const contactForm = document.getElementById('contact-form');
-            const submitBtn = document.getElementById('submit-btn');
-            const formStatus = document.getElementById('form-status');
-            
-            // Validación en tiempo real
-            document.getElementById('form-name').addEventListener('blur', function() {
-                if (this.value.trim() === '') {
-                    showError('form-name', 'Por favor ingresa tu nombre');
-                } else {
-                    clearError('form-name');
-                }
-            });
-            
-            document.getElementById('form-email').addEventListener('blur', function() {
-                if (this.value.trim() === '') {
-                    showError('form-email', 'Por favor ingresa tu email');
-                } else if (!validateEmail(this.value)) {
-                    showError('form-email', 'Por favor ingresa un email válido');
-                } else {
-                    clearError('form-email');
-                }
-            });
-            
-            document.getElementById('form-message').addEventListener('blur', function() {
-                if (this.value.trim() === '') {
-                    showError('form-message', 'Por favor ingresa tu mensaje');
-                } else {
-                    clearError('form-message');
-                }
-            });
-            
-            if(contactForm) {
-                contactForm.addEventListener('submit', async function(e) {
-                    e.preventDefault();
-                    
-                    let isValid = true;
-                    const name = document.getElementById('form-name').value.trim();
-                    const email = document.getElementById('form-email').value.trim();
-                    const message = document.getElementById('form-message').value.trim();
-                    
-                    // Validación de nombre
-                    if (name === '') {
-                        showError('form-name', 'Por favor ingresa tu nombre');
-                        isValid = false;
-                    } else {
-                        clearError('form-name');
-                    }
-                    
-                    // Validación de email
-                    if (email === '') {
-                        showError('form-email', 'Por favor ingresa tu email');
-                        isValid = false;
-                    } else if (!validateEmail(email)) {
-                        showError('form-email', 'Por favor ingresa un email válido');
-                        isValid = false;
-                    } else {
-                        clearError('form-email');
-                    }
-                    
-                    // Validación de mensaje
-                    if (message === '') {
-                        showError('form-message', 'Por favor ingresa tu mensaje');
-                        isValid = false;
-                    } else {
-                        clearError('form-message');
-                    }
-                    
-                    if (!isValid) {
-                        formStatus.textContent = 'Por favor, completa todos los campos correctamente.';
-                        formStatus.classList.remove('text-green-500');
-                        formStatus.classList.add('text-red-500');
-                        return;
-                    }
-                    
-                    submitBtn.disabled = true;
-                    submitBtn.textContent = 'Enviando...';
-                    formStatus.textContent = '';
-                    
-                    try {
-                        // Guarda los datos en Firestore
-                        const contactsCollectionRef = collection(db, `artifacts/${appId}/public/data/contacts`);
-                        await addDoc(contactsCollectionRef, {
-                            name,
-                            email,
-                            message,
-                            timestamp: new Date()
-                        });
-                        
-                        // Muestra mensaje de éxito y abre WhatsApp
-                        formStatus.textContent = 'Mensaje enviado correctamente. Redirigiendo a WhatsApp...';
-                        formStatus.classList.remove('text-red-500');
-                        formStatus.classList.add('text-green-500');
-
-                        const whatsappMessage = `¡Hola! Quisiera hacer una consulta:\n\n*Nombre:* ${name}\n*Email:* ${email}\n\n*Mensaje:*\n${message}`;
-                        const whatsappUrl = `https://wa.me/5493412687230?text=${encodeURIComponent(whatsappMessage)}`;
-                        
-                        // Pequeña pausa para que el usuario vea el mensaje de éxito
-                        setTimeout(() => {
-                            window.open(whatsappUrl, '_blank');
-                            contactForm.reset();
-                            
-                            // Limpiar estados de validación
-                            document.querySelectorAll('.form-input').forEach(input => {
-                                input.classList.remove('error', 'success');
-                            });
-                        }, 1500);
-                        
-                    } catch (error) {
-                        console.error("Error al enviar el formulario a Firestore:", error);
-                        formStatus.textContent = 'Ocurrió un error. Por favor, inténtalo de nuevo.';
-                        formStatus.classList.remove('text-green-500');
-                        formStatus.classList.add('text-red-500');
-                    } finally {
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = 'ENVIAR A WHATSAPP';
-                    }
-                });
-            }
-        });
-    </script>
 </body>
 </html>
+
