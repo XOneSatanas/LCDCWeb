@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Casa de las Cortinas | Estándar de Lujo</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+    <!-- Nav -->
+    <nav id="navbar">
+        <div class="nav-inner">
+            <a href="#inicio">
+                <img src="assets/logo.jpg" alt="Logo" class="brand-logo">
+            </a>
+            <ul class="nav-links">
+                <li><a href="#colecciones">Colecciones</a></li>
+                <li><a href="#nosotros">Esencia</a></li>
+                <li><a href="asociados.html">Profesionales</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Full Width -->
+    <section class="hero-full" id="inicio">
+        <img src="assets/lifestyle.png" alt="Arquitectura de la Luz" class="hero-bg">
+        <div class="hero-content">
+            <h1 class="reveal">Arquitectura <br>de la Luz</h1>
+            <p class="reveal">Sistemas de control solar diseñados para la arquitectura contemporánea.</p>
+        </div>
+    </section>
+
+    <!-- Colecciones: Clean Grid -->
+    <section id="colecciones" class="section-pad">
+        <div class="container-luxe">
+            <h2 class="reveal">Colecciones</h2>
+
+            <div class="clean-grid">
+
+                <!-- Roller -->
+                <div class="product-item reveal" data-product="Roller">
+                    <div class="product-img-box">
+                        <img src="assets/roller.png" alt="Roller">
+                    </div>
+                    <div class="product-info">
+                        <h3>Colección Roller</h3>
+                        <p>Diseño purista. Accionamiento manual o motorizado.</p>
+                    </div>
+                </div>
+
+                <!-- Bandas Verticales -->
+                <div class="product-item reveal" data-product="Bandas">
+                    <div class="product-img-box">
+                        <img src="assets/texture.png" alt="Bandas Verticales">
+                    </div>
+                    <div class="product-info">
+                        <h3>Bandas Verticales</h3>
+                        <p>Versatilidad táctica para grandes ventanales.</p>
+                    </div>
+                </div>
+
+                <!-- Venecianas -->
+                <div class="product-item reveal" data-product="Venecianas">
+                    <div class="product-img-box">
+                        <img src="assets/texture.png" alt="Venecianas">
+                    </div>
+                    <div class="product-info">
+                        <h3>Venecianas</h3>
+                        <p>Calidez técnica en madera o aluminio.</p>
+                    </div>
+                </div>
+
+                <!-- Confeccionadas -->
+                <div class="product-item reveal" data-product="Confeccionadas">
+                    <div class="product-img-box">
+                        <img src="assets/lifestyle.png" alt="Confeccionadas">
+                    </div>
+                    <div class="product-info">
+                        <h3>Confeccionadas</h3>
+                        <p>Sastrería textil de autor a medida.</p>
+                    </div>
+                </div>
+
+                <!-- Toldos -->
+                <div class="product-item reveal" data-product="Toldos">
+                    <div class="product-img-box">
+                        <img src="assets/office.png" alt="Toldos">
+                    </div>
+                    <div class="product-info">
+                        <h3>Toldos</h3>
+                        <p>Arquitectura de protección exterior.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Nosotros: Clean Section -->
+    <section id="nosotros" class="section-pad" style="background-color: var(--bg-smoke);">
+        <div class="container-luxe">
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <h2 class="reveal">Nuestra Esencia</h2>
+                <p class="reveal" style="font-size: 18px; line-height: 2;">Somos artesanos de la luz. Unimos la
+                    precisión de la tecnología con la pasión por el diseño para crear soluciones que definen atmósferas.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto" class="section-pad">
+        <div class="container-luxe">
+            <h2 class="reveal">Proyecto</h2>
+            <div style="display: flex; gap: 100px;">
+                <div style="flex: 1;" class="reveal">
+                    <p style="margin-bottom: 40px;">Contáctenos para un asesoramiento personalizado en su obra o
+                        residencia.</p>
+                    <div style="margin-bottom: 20px;">
+                        <span
+                            style="font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; display: block;">WhatsApp</span>
+                        <a href="https://wa.me/5493412687230"
+                            style="text-decoration: none; color: black; font-size: 18px;">341-2687230</a>
+                    </div>
+                    <div>
+                        <span
+                            style="font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; display: block;">Email</span>
+                        <a href="mailto:lacasadelascortinasok@gmail.com"
+                            style="text-decoration: none; color: black; font-size: 18px;">lacasadelascortinasok@gmail.com</a>
+                    </div>
+                </div>
+                <div style="flex: 1.5;" class="reveal">
+                    <form class="premium-form">
+                        <input type="text" placeholder="NOMBRE" class="luxe-input">
+                        <input type="email" placeholder="EMAIL" class="luxe-input">
+                        <textarea placeholder="PROYECTO" class="luxe-input" style="height: 100px;"></textarea>
+                        <button type="submit" class="btn-luxe">Enviar Consulta</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- X-1 Seal -->
+    <div class="x1-seal reveal">
+        <p style="font-size: 9px; letter-spacing: 0.4em; color: #999; margin-bottom: 20px;">INGENIERÍA INVISIBLE BY</p>
+        <img src="assets/x1_logo.jpg" alt="X-1 Hogar Inteligente" class="x1-logo-footer">
+    </div>
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <div id="modal-body">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Assistant Widget -->
+    <div class="asistente-luxe" id="asistente-root">
+        <button class="bot-trigger-rect" id="bot-trigger">[ + ASISTENTE VIRTUAL ]</button>
+        <div class="bot-window-luxe" id="bot-window">
+            <h4 style="font-size: 10px; letter-spacing: 0.3em; margin-bottom: 30px; opacity: 0.5;">SISTEMA LUZ v1.0</h4>
+            <div id="bot-chat-content">
+                <p id="bot-text" style="font-size: 16px; font-weight: 300; margin-bottom: 40px;">Es un privilegio
+                    asistirle. ¿Cuáles son las dimensiones de su ventanal?</p>
+                <input type="number" id="bot-ancho" placeholder="ANCHO (m)" class="luxe-input">
+                <input type="number" id="bot-alto" placeholder="ALTO (m)" class="luxe-input">
+                <div id="bot-result" style="margin-bottom: 30px; font-size: 20px; font-weight: 400;"></div>
+                <button class="btn-luxe" style="width: 100%;" id="bot-calc">Calcular</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

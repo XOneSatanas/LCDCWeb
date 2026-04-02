@@ -1,0 +1,19 @@
+{
+    "company": "La Casa de las Cortinas",
+    "version": "1.0",
+    "last_sync": "2026-01-29T20:25:00Z",
+    "pricing": {
+        "roller_screen": 45.0,
+        "roller_blackout": 55.0,
+        "bandas_verticales": 38.5,
+        "venecianas_aluminio": 42.0,
+        "toldos_brazo_invisible": 120.0,
+        "motorization_standard": 150.0,
+        "smart_hub_x1": 299.0
+    },
+    "business_rules": {
+        "min_sqm_venta": 1.5,
+        "extra_alto_offset": 0.10,
+        "partner_architect_bonus": 0.10
+    }
+}
