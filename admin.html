@@ -182,7 +182,7 @@
                     <div class="bg-white p-6 rounded-2xl border border-slate-200">
                         <div class="flex justify-between items-start mb-4">
                             <div class="p-2 bg-purple-50 rounded-lg text-purple-600"><span class="material-symbols-outlined">robot_2</span></div>
-                            <span class="text-[10px] font-black bg-purple-50 text-purple-700 px-2 py-1 rounded">4 ONLINE</span>
+                            <span class="text-[10px] font-black bg-purple-50 text-purple-700 px-2 py-1 rounded">5 ONLINE</span>
                         </div>
                         <p class="text-sm font-bold text-slate-400 uppercase tracking-widest">Active Agents</p>
                         <h3 class="text-4xl font-black text-slate-900 mt-1">Stable</h3>
@@ -274,6 +274,16 @@
                         <p class="text-sm text-slate-500 mb-6">Monitors SSL, security headers, and NPM vulnerabilities.</p>
                         <div class="w-full bg-slate-100 h-2 rounded-full mb-2"><div class="bg-orange-500 w-[82%] h-full rounded-full"></div></div>
                         <p class="text-xs font-bold text-orange-600 uppercase tracking-widest">Issues found: 02</p>
+                    </div>
+                    <!-- Agent Card -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <h4 class="font-bold text-lg">CM Agent (Social)</h4>
+                            <span class="px-2 py-1 bg-green-50 text-green-700 text-[10px] font-bold rounded uppercase">Active</span>
+                        </div>
+                        <p class="text-sm text-slate-500 mb-6">Generates content and handles automated DMs & Comments.</p>
+                        <div class="w-full bg-slate-100 h-2 rounded-full mb-2"><div class="bg-purple-500 w-[100%] h-full rounded-full"></div></div>
+                        <p class="text-xs font-bold text-purple-600 uppercase tracking-widest">Score: 100/100</p>
                     </div>
                 </div>
             </div>
@@ -415,7 +425,8 @@
                 setTimeout(() => logToTerminal('SRE_AGENT: Lighthouse Scan Score 96/100', 'white'), 1000);
                 setTimeout(() => logToTerminal('SEO_AGENT: Metadata Scan Success (100%)', 'white'), 2000);
                 setTimeout(() => logToTerminal('SECURITY_AGENT: 0 vulnerabilities found.', 'green'), 3000);
-                setTimeout(() => logToTerminal('WEBHOOK: Sync complete.', 'cyan'), 4000);
+                setTimeout(() => logToTerminal('CM_AGENT: Inbox Zero. 3 posts scheduled.', 'purple'), 4000);
+                setTimeout(() => logToTerminal('WEBHOOK: Sync complete.', 'cyan'), 5000);
 
             } catch (error) {
                 logToTerminal('ERROR: Failed to connect to Netlify Function.', 'red');
