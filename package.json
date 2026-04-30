@@ -1,0 +1,17 @@
+{
+  "name": "la-casa-de-las-cortinas-agents",
+  "version": "1.0.0",
+  "description": "Ecosystem of autonomous agents and Command Center",
+  "main": "index.html",
+  "scripts": {
+    "n8n:mock": "node mock_n8n_server.js",
+    "agents:run": "node agents/simulate_agents.js",
+    "start": "node mock_n8n_server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "axios": "^1.6.2",
+    "dotenv": "^16.3.1"
+  }
+}

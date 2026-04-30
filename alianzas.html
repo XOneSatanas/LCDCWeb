@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!-- Meta Pixel Code -->
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      const pixelId = (typeof CONFIG !== 'undefined') ? CONFIG.PIXEL_ID : 'TU_PIXEL_ID';
+      fbq('init', pixelId);
+      fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=TU_PIXEL_ID&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-3300140845"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'AW-3300140845');
+    </script>
+    <!-- End Google tag -->
+
+    <!-- Local SEO Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HomeGoodsStore",
+      "name": "La Casa de las Cortinas",
+      "image": "https://lacasadelascortinas.com.ar/assets/images/logo-main.jpg",
+      "url": "https://lacasadelascortinas.com.ar/",
+      "telephone": "",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Rosario",
+        "addressRegion": "Santa Fe",
+        "addressCountry": "AR"
+      },
+      "description": "Especialistas en cortinas Roller, Toldos de Proyección, Bandas Verticales y Automatización. Control solar inteligente de alta gama en Rosario."
+    }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Partners: Arquitectos y Decoradores | La Casa de las Cortinas</title>
+    <meta name="description" content="Súmate a nuestra red de profesionales. Ofrecemos soporte técnico, catálogos premium y logística prioritaria en cortinas y toldos para estudios de arquitectura y diseño.">
+    <meta name="keywords" content="arquitectos rosario, decoradores rosario, cortinas para profesionales, control solar obras, interiorismo rosario">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lacasadelascortinas.com.ar/alianzas.html">
+    <meta property="og:title" content="Portal Partners | Alianzas con Arquitectos y Diseñadores">
+    <meta property="og:description" content="Potenciamos tus proyectos con sistemas de control solar de alta especificación. Beneficios exclusivos para profesionales.">
+    <meta property="og:image" content="https://lacasadelascortinas.com.ar/assets/images/alianzas_architecture_blueprint.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://lacasadelascortinas.com.ar/alianzas.html">
+    <meta property="twitter:title" content="Portal Partners | LCDC Web">
+    <meta property="twitter:description" content="Soporte técnico y logística para profesionales de la arquitectura y el diseño.">
+    <meta property="twitter:image" content="https://lacasadelascortinas.com.ar/assets/images/alianzas_architecture_blueprint.png">
+
+    <link rel="canonical" href="https://lacasadelascortinas.com.ar/alianzas.html">
+
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <!-- Config -->
+    <script src="assets/js/config.js"></script>
+
+    <!-- Icons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-ultra: #050505;
+            --glass-card: rgba(255, 255, 255, 0.03);
+            --glass-blur: blur(20px);
+            --neon-blue: #00e5ff;
+            --tech-violet: #ab47bc;
+            --silver-gradient: linear-gradient(180deg, #ffffff 0%, #a0a0a0 100%);
+        }
+
+        body {
+            background-color: var(--bg-ultra);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            margin: 0;
+            scroll-behavior: smooth;
+        }
+
+        .navbar {
+            height: 100px;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            text-transform: uppercase;
+            background: var(--silver-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 0.9;
+        }
+
+        .tech-form-container {
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.6);
+            -webkit-backdrop-filter: blur(40px);
+            backdrop-filter: blur(40px);
+            padding: 4rem;
+            border-radius: 24px;
+            position: relative;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fab-chat {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            z-index: 999;
+            background: #25D366;
+            color: white;
+            box-shadow: 0 0 20px rgba(37,211,102,0.4);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .fab-chat:hover { transform: translateY(-5px); }
+    </style>
+</head>
+
+<body class="bg-black text-white overflow-x-hidden">
+
+    <!-- NAVBAR: CONSISTENTE CON INDEX -->
+    <header class="fixed top-0 left-0 w-full z-[100] navbar flex justify-between items-center px-6 md:px-16 bg-black/40 backdrop-blur-xl border-b border-white/5 transition-all duration-500">
+        <div class="logo">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <div class="relative bg-black/20 p-2 rounded-xl border border-white/5 group-hover:border-[#00e5ff]/30 transition-all duration-500">
+                    <svg width="30" height="30" viewBox="0 0 40 40" class="drop-shadow-[0_0_8px_rgba(0,229,255,0.4)]">
+                        <path d="M20 5 L5 20 L8 20 L8 35 L32 35 L32 20 L35 20 Z" fill="none" stroke="#00e5ff" stroke-width="2" />
+                        <path d="M17 35 L17 27 L23 27 L23 35" fill="none" stroke="#ab47bc" stroke-width="2" />
+                    </svg>
+                </div>
+                <div class="flex flex-col leading-[0.8]">
+                    <span class="text-[7px] font-bold tracking-[0.5em] text-white/30 uppercase mb-1">La Casa de las</span>
+                    <span class="text-lg font-black tracking-tighter uppercase bg-gradient-to-r from-white via-white to-[#00e5ff] bg-clip-text text-transparent" style="-webkit-background-clip: text; background-clip: text;">CORTINAS</span>
+                </div>
+            </a>
+        </div>
+        <nav class="hidden lg:flex space-x-12 items-center">
+            <a href="index.html" class="nav-link-custom">Inicio</a>
+            <a href="index.html#coleccion" class="nav-link-custom">Colección</a>
+            <a href="index.html#automatizaciones" class="nav-link-custom text-[#ab47bc]">Automatización</a>
+            <a href="alianzas.html" class="nav-link-custom text-[#FF6B00] font-bold">Portal Partners</a>
+        </nav>
+        <div class="flex items-center gap-6">
+            <a href="javascript:void(0)" onclick="openWhatsApp()" class="hidden md:flex items-center gap-2 bg-[#00e5ff] text-black px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all shadow-[0_0_20px_rgba(0,229,255,0.3)]">
+                <i class='bx bxl-whatsapp text-lg'></i> Contacto
+            </a>
+            <button class="lg:hidden text-3xl"><i class='bx bx-menu'></i></button>
+        </div>
+    </header>
+
+    <main class="pt-32">
+        <!-- HERO -->
+        <section class="min-h-[70vh] flex flex-col justify-center px-6 md:px-24 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-[#ab47bc]/10 rounded-full blur-[120px] -z-10"></div>
+            <div class="reveal active">
+                <p class="text-[9px] tracking-[1.2em] uppercase text-[#00e5ff] mb-8 font-bold">Professional Partnership // Club Privado</p>
+                <h1 class="hero-title">ALIANZAS PARA <br> ARQUITECTOS.</h1>
+                <p class="mt-8 text-white/50 max-w-2xl font-light leading-relaxed uppercase tracking-[0.2em] text-xs">
+                    Especialistas en cortinas rollers, bandas verticales, venecianas y toldos. Soporte técnico y logística prioritaria para profesionales del diseño.
+                </p>
+            </div>
+        </section>
+
+        <!-- PILARES -->
+        <section class="py-32 px-6 md:px-24 bg-black/50">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="vegas-glass-card reveal">
+                    <i class='bx bx-ghost text-4xl text-[#ab47bc] mb-6'></i>
+                    <h3 class="text-xl font-bold uppercase mb-4">Delegación <br> Absoluta</h3>
+                    <p class="text-[10px] text-white/40 leading-loose uppercase tracking-widest">Nos sumamos a tu equipo. Relevamiento, instalación y configuración de automatización 100% a cargo nuestro.</p>
+                </div>
+                <div class="vegas-glass-card reveal" style="transition-delay: 200ms;">
+                    <i class='bx bx-cube-alt text-4xl text-[#00e5ff] mb-6'></i>
+                    <h3 class="text-xl font-bold uppercase mb-4">Assets 3D <br> & Renders</h3>
+                    <p class="text-[10px] text-white/40 leading-loose uppercase tracking-widest">Provisión de bloques BIM/Sketchup con texturas reales para simulaciones fotométricas perfectas.</p>
+                </div>
+                <div class="vegas-glass-card reveal" style="transition-delay: 400ms;">
+                    <i class='bx bx-time-five text-4xl text-[#ab47bc] mb-6'></i>
+                    <h3 class="text-xl font-bold uppercase mb-4">Logística <br> Prioritaria</h3>
+                    <p class="text-[10px] text-white/40 leading-loose uppercase tracking-widest">Aceleración de procesos para obras críticas con seguimiento ejecutivo personalizado.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROGRAMA -->
+        <section class="py-32 px-6 md:px-24 border-t border-white/5">
+            <div class="flex flex-col lg:flex-row gap-16 items-center">
+                <div class="w-full lg:w-[60%] h-[500px] rounded-[40px] overflow-hidden border border-white/10 reveal">
+                    <img src="assets/images/alianzas_designer_samples.png" alt="Samples" class="w-full h-full object-cover brightness-75">
+                </div>
+                <div class="w-full lg:w-[40%] reveal">
+                    <h2 class="text-5xl font-black tracking-tighter uppercase mb-6 leading-tight">Programa <br><span class="text-[#00e5ff]">Multimarca.</span></h2>
+                    <p class="text-sm text-white/50 leading-relaxed font-light mb-8">
+                        Deje de perder el tiempo midiendo y lidiando con instaladores. Delegue la fricción técnica y concéntrese en el diseño.
+                    </p>
+                    <ul class="space-y-4 text-[10px] font-bold uppercase tracking-widest text-white/80">
+                        <li class="flex items-center gap-3"><i class='bx bx-check text-[#ab47bc] text-xl'></i> Catálogos Físicos VIP</li>
+                        <li class="flex items-center gap-3"><i class='bx bx-check text-[#00e5ff] text-xl'></i> Asistencia e instalación in-situ</li>
+                        <li class="flex items-center gap-3"><i class='bx bx-check text-[#ab47bc] text-xl'></i> Comisiones Garantizadas Invariables</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- FORMULARIO -->
+        <section id="registro" class="py-40 flex justify-center px-6">
+            <div class="tech-form-container max-w-4xl w-full reveal">
+                <div class="mb-16">
+                    <h2 class="text-4xl font-black tracking-tighter uppercase mb-4">Postulación Profesional</h2>
+                    <p class="text-[9px] text-white/30 tracking-[0.4em] uppercase">Complete sus datos para acreditarse en nuestra red.</p>
+                </div>
+
+                <form id="alianzasForm" class="space-y-12">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
+                        <div><span class="vegas-floating-label">Nombre Completo</span><input type="text" id="nombre" class="vegas-form-input" title="Nombre Completo" required></div>
+                        <div><span class="vegas-floating-label">Estudio / Empresa</span><input type="text" id="estudio" class="vegas-form-input" title="Estudio o Empresa" required></div>
+                        <div><span class="vegas-floating-label">Ciudad</span><input type="text" id="ciudad" class="vegas-form-input" title="Ciudad" required></div>
+                        <div><span class="vegas-floating-label">Email Corporativo</span><input type="email" id="email" class="vegas-form-input" title="Email Corporativo" required></div>
+                        <div><span class="vegas-floating-label">Celular / WhatsApp</span><input type="tel" id="telefono" class="vegas-form-input" title="Celular o WhatsApp" required></div>
+                        <div><span class="vegas-floating-label">Instagram / Portfolio</span><input type="url" id="portfolio" class="vegas-form-input" title="Instagram o Portfolio" placeholder="https://..."></div>
+                    </div>
+                    <div class="flex flex-col items-center pt-8">
+                        <button type="submit" id="submitBtn" class="vegas-btn-neon pulse-vip">SOLICITAR ACCESO AL CLUB</button>
+                        <div id="formStatus" class="mt-8 text-center text-[10px] tracking-[0.4em] uppercase opacity-0 transition-all h-4"></div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER CONSISTENTE -->
+    <!-- FOOTER GLOBALY INJECTED -->
+    <footer class="py-24 px-10 border-t border-white/5 bg-[#010101]">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div class="col-span-2">
+                <div class="flex items-center gap-4 mb-8 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-700">
+                    <svg width="40" height="40" viewBox="0 0 40 40">
+                        <path d="M20 5 L5 20 L8 20 L8 35 L32 35 L32 20 L35 20 Z" fill="none" stroke="currentColor" stroke-width="1.5" />
+                        <path d="M17 35 L17 27 L23 27 L23 35" fill="none" stroke="currentColor" stroke-width="1.5" />
+                    </svg>
+                    <div class="flex flex-col leading-[0.8]">
+                        <span class="text-[8px] font-bold tracking-[0.4em] uppercase mb-1">La Casa de las</span>
+                        <span class="text-2xl font-black tracking-tighter uppercase">CORTINAS</span>
+                    </div>
+                </div>
+                <p class="text-white/20 text-xs uppercase tracking-widest leading-loose max-w-sm">
+                    Sistemas de arquitectura textil de alta prestación. Especialistas en el control de la luz natural mediante ingeniería aplicada.
+                </p>
+                <div class="flex space-x-4 mt-8">
+                    <a href="https://www.instagram.com/lacasadelascortinasok/" target="_blank" class="text-white/40 hover:text-[#00e5ff] text-2xl transition-colors"><i class='bx bxl-instagram'></i></a>
+                </div>
+            </div>
+            <div>
+                <h5 class="text-[10px] font-bold uppercase tracking-[0.4em] text-white/40 mb-8">Navegación</h5>
+                <ul class="space-y-4 text-[10px] uppercase tracking-widest">
+                    <li><a href="index.html" class="hover:text-[#00e5ff]">Inicio</a></li>
+                    <li><a href="index.html#coleccion" class="hover:text-[#00e5ff]">Colecciones</a></li>
+                    <li><a href="alianzas.html" class="hover:text-[#00e5ff]">Portal Partners</a></li>
+                    <li><a href="profesionales.html" class="hover:text-[#00e5ff]">Profesionales</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-[10px] font-bold uppercase tracking-[0.4em] text-white/40 mb-8">Contacto & Legales</h5>
+                <ul class="space-y-4 text-[10px] uppercase tracking-widest">
+                    <li><a href="javascript:void(0)" onclick="openWhatsApp()" class="hover:text-[#25D366] text-[#25D366]"><i class='bx bxl-whatsapp'></i> WhatsApp</a></li>
+                    <li><a href="mailto:lacasadelascortinasok@gmail.com" class="hover:text-[#ab47bc]">Email Comercial</a></li>
+                    <li class="pt-4"><a href="#" class="text-white/20 hover:text-white">Términos y Condiciones</a></li>
+                    <li><a href="#" class="text-white/20 hover:text-white">Políticas de Privacidad</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[8px] uppercase tracking-[0.5em] text-white/10 gap-4">
+            <p>© 2026 LA CASA DE LAS CORTINAS. TODOS LOS DERECHOS RESERVADOS.</p>
+            <p>DESIGNED BY ARCHI / POWERED BY X-1</p>
+        </div>
+    </footer>
+
+    <!-- FAB -->
+    <a href="javascript:void(0)" onclick="openWhatsApp()" title="Consultar por WhatsApp" class="fab-chat"><i class='bx bxl-whatsapp'></i></a>
+
+    <!-- LOGIC -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = CONFIG.SUPABASE_URL;
+        const SUPABASE_KEY = CONFIG.SUPABASE_KEY;
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        const reveal = () => {
+            document.querySelectorAll('.reveal').forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('active');
+            });
+        }
+        window.addEventListener('scroll', reveal);
+        window.addEventListener('load', reveal);
+
+        document.getElementById('alianzasForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const status = document.getElementById('formStatus');
+            btn.innerText = 'ABRIENDO WHATSAPP...';
+            btn.disabled = true;
+
+            const data = {
+                nombre_completo: document.getElementById('nombre').value,
+                estudio_empresa: document.getElementById('estudio').value,
+                ciudad: document.getElementById('ciudad').value,
+                email: document.getElementById('email').value,
+                telefono: document.getElementById('telefono').value,
+                notes: `Portfolio: ${document.getElementById('portfolio').value}`,
+                status: 'new', tier: 'Partner'
+            };
+
+            await supabaseClient.from('profesional_leads').insert([data]);
+            const msg = `Hola, quiero solicitar acceso al Club Profesional.%0A%0A*Datos:*%0A- Nombre: ${data.nombre_completo}%0A- Estudio: ${data.estudio_empresa}%0A- Ciudad: ${data.ciudad}`;
+            openWhatsApp(msg);
+            
+            status.innerText = 'SOLICITUD ENVIADA';
+            status.style.opacity = '1';
+            btn.innerText = 'ACCESO SOLICITADO';
+        });
+    </script>
+    <script src="agents/brevo_crm.js"></script>
+</body>
+</html>

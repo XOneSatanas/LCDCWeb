@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!-- Meta Pixel Code -->
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      const pixelId = (typeof CONFIG !== 'undefined') ? CONFIG.PIXEL_ID : 'TU_PIXEL_ID';
+      fbq('init', pixelId);
+      fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=TU_PIXEL_ID&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-3300140845"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'AW-3300140845');
+    </script>
+    <!-- End Google tag -->
+
+    <!-- Local SEO Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HomeGoodsStore",
+      "name": "La Casa de las Cortinas",
+      "image": "https://lacasadelascortinas.com.ar/assets/images/logo-main.jpg",
+      "url": "https://lacasadelascortinas.com.ar/",
+      "telephone": "",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Rosario",
+        "addressRegion": "Santa Fe",
+        "addressCountry": "AR"
+      },
+      "description": "Especialistas en cortinas Roller, Toldos de Proyección, Bandas Verticales y Automatización. Control solar inteligente de alta gama en Rosario."
+    }
+    </script>
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicio para Profesionales en Rosario | La Casa de las Cortinas</title>
+    <meta name="description" content="Soporte técnico y comercial para arquitectos, decoradores y desarrolladores. Sistemas de cortinas y toldos de alta gama con integración domótica X-1.">
+    <meta name="keywords" content="profesionales cortinas, arquitectura rosario, domotica rosario, control solar edificios, cortinas motorizadas">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lacasadelascortinas.com.ar/profesionales.html">
+    <meta property="og:title" content="Asesoramiento para Profesionales | La Casa de las Cortinas">
+    <meta property="og:description" content="Sistemas de control solar de alta especificación para estudios de diseño y proyectistas.">
+    <meta property="og:image" content="https://lacasadelascortinas.com.ar/assets/images/logo-main.jpg">
+
+    <link rel="canonical" href="https://lacasadelascortinas.com.ar/profesionales.html">
+
+    <!-- Fonts: Inter & Montserrat for extreme contrast -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;900&family=Montserrat:wght@100;400;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="archi-design.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Config -->
+    <script src="assets/js/config.js"></script>
+
+    <!-- Icons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        .cinematic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            opacity: 0.2;
+            object-fit: cover;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            text-transform: uppercase;
+            background: var(--silver-gradient, linear-gradient(180deg, #ffffff 0%, #a0a0a0 100%));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 0.9;
+        }
+
+        .dot-violet {
+            -webkit-text-fill-color: #ab47bc;
+            background: none;
+        }
+
+        .svg-icon {
+            width: 40px;
+            height: 40px;
+            stroke: #00e5ff;
+            fill: none;
+            stroke-width: 1.5;
+            margin-bottom: 2rem;
+        }
+
+        .tech-form-container {
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            background: rgba(0, 0, 0, 0.4);
+            -webkit-backdrop-filter: blur(40px);
+            backdrop-filter: blur(40px);
+            padding: 4rem;
+            position: relative;
+        }
+
+        .tech-form-container::after,
+        .tech-form-container::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #ab47bc;
+            opacity: 0.5;
+        }
+
+        .tech-form-container::before {
+            top: -1px;
+            left: -1px;
+            border-right: 0;
+            border-bottom: 0;
+        }
+
+        .tech-form-container::after {
+            bottom: -1px;
+            right: -1px;
+            border-left: 0;
+            border-top: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <img src="assets/images/hero.png" alt="LUZ Cinematic" class="cinematic-bg">
+
+    <main class="min-h-screen">
+
+    <header class="fixed top-0 left-0 w-full z-[100] h-[100px] flex justify-between items-center px-6 md:px-16 bg-black/40 backdrop-blur-xl border-b border-white/5 transition-all duration-500">
+        <div class="logo">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <div class="relative bg-black/20 p-2 rounded-xl border border-white/5 group-hover:border-[#00e5ff]/30 transition-all duration-500">
+                    <svg width="30" height="30" viewBox="0 0 40 40" class="drop-shadow-[0_0_8px_rgba(0,229,255,0.4)]">
+                        <path d="M20 5 L5 20 L8 20 L8 35 L32 35 L32 20 L35 20 Z" fill="none" stroke="#00e5ff" stroke-width="2" />
+                        <path d="M17 35 L17 27 L23 27 L23 35" fill="none" stroke="#ab47bc" stroke-width="2" />
+                    </svg>
+                </div>
+                <div class="flex flex-col leading-[0.8]">
+                    <span class="text-[7px] font-bold tracking-[0.5em] text-white/30 uppercase mb-1">La Casa de las</span>
+                    <span class="text-lg font-black tracking-tighter uppercase bg-gradient-to-r from-white via-white to-[#00e5ff] bg-clip-text text-transparent" style="-webkit-background-clip: text; background-clip: text;">CORTINAS</span>
+                </div>
+            </a>
+        </div>
+        <nav class="hidden lg:flex space-x-12 items-center">
+            <a href="index.html" class="nav-link-custom">Inicio</a>
+            <a href="index.html#coleccion" class="nav-link-custom">Colección</a>
+            <a href="index.html#automatizaciones" class="nav-link-custom text-[#ab47bc]">Automatización</a>
+            <a href="alianzas.html" class="nav-link-custom text-[#FF6B00] font-bold">Portal Partners</a>
+        </nav>
+        <div class="flex items-center gap-6">
+            <a href="javascript:void(0)" onclick="openWhatsApp()" class="hidden md:flex items-center gap-2 bg-[#00e5ff] text-black px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all shadow-[0_0_20px_rgba(0,229,255,0.3)]">
+                <i class='bx bxl-whatsapp text-lg'></i> Contacto
+            </a>
+            <button class="lg:hidden text-3xl"><i class='bx bx-menu'></i></button>
+        </div>
+    </header>
+
+        <section class="min-h-[90vh] flex flex-col justify-center px-10 md:px-24">
+            <p class="text-[10px] tracking-[1em] uppercase text-white/30 mb-8 animate-fade-in">Private Partnership</p>
+            <h1 class="hero-title">
+                TECNOLOGÍA <br> DE LA LUZ<span class="dot-violet">.</span>
+            </h1>
+            <p class="mt-12 text-white/40 max-w-xl font-light leading-relaxed uppercase tracking-widest text-xs">
+                Sistemas de control solar de alta especificación para estudios de diseño y proyectistas senior.
+            </p>
+        </section>
+
+        <section class="py-40 px-10 md:px-24">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+
+                <div class="vegas-glass-card">
+                    <svg class="svg-icon" viewBox="0 0 24 24">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                    </svg>
+                    <h4 class="text-xs tracking-[0.4em] uppercase text-white/20 mb-4">Finanzas</h4>
+                    <h3 class="text-2xl font-black mb-6 uppercase">Esquema de Rentabilidad Premium</h3>
+                    <p class="text-white/40 text-sm leading-relaxed">Optimizamos la rentabilidad de sus proyectos mediante acuerdos técnicos preferenciales.</p>
+                </div>
+
+                <div class="vegas-glass-card">
+                    <svg class="svg-icon" viewBox="0 0 24 24">
+                        <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+                    <h4 class="text-xs tracking-[0.4em] uppercase text-white/20 mb-4">Tecnología</h4>
+                    <h3 class="text-2xl font-black mb-6 uppercase">Soporte Técnico de Alta Especificación</h3>
+                    <p class="text-white/40 text-sm leading-relaxed">Documentación técnica, CAD y soporte en obra para asegurar la precisión del montaje.</p>
+                </div>
+
+                <div class="vegas-glass-card">
+                    <svg class="svg-icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"></path>
+                    </svg>
+                    <h4 class="text-xs tracking-[0.4em] uppercase text-white/20 mb-4">Innovación</h4>
+                    <h3 class="text-2xl font-black mb-6 uppercase">Integración X-1 Smart Domotics</h3>
+                    <p class="text-white/40 text-sm leading-relaxed">Control total nativo. Automatización invisible integrada desde la fase de anteproyecto.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="py-60 flex justify-center px-10">
+            <div class="tech-form-container max-w-4xl w-full">
+                <div class="mb-20">
+                    <h4 class="text-[10px] tracking-[0.8em] uppercase text-[#ab47bc] font-black mb-4">Acreditación</h4>
+                    <h2 class="text-6xl font-black tracking-tighter uppercase mb-6">Acceso VIP<br><span class="text-white/10">Partnership</span></h2>
+                </div>
+
+                <form id="proForm" class="space-y-16">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-16">
+                        <div>
+                            <span class="vegas-floating-label">Nombre Aspirante</span>
+                            <input type="text" id="nombre" class="vegas-form-input" required>
+                        </div>
+                        <div>
+                            <span class="vegas-floating-label">Estudio / Firma</span>
+                            <input type="text" id="estudio" class="vegas-form-input" required>
+                        </div>
+                        <div>
+                            <span class="vegas-floating-label">Email Corporativo</span>
+                            <input type="email" id="email" class="vegas-form-input" required>
+                        </div>
+                        <div>
+                            <span class="vegas-floating-label">Teléfono Técnico</span>
+                            <input type="tel" id="telefono" class="vegas-form-input" required>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center pt-10">
+                        <button type="submit" class="vegas-btn-neon pulse-vip">SOLICITAR ACCESO VIP</button>
+                    </div>
+                </form>
+
+                <div id="formStatus" class="mt-12 text-center text-[10px] tracking-[0.4em] uppercase opacity-0 transition-all duration-500"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER GLOBALY INJECTED -->
+    <footer class="py-24 px-10 border-t border-white/5 bg-[#010101]">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div class="col-span-2">
+                <div class="flex items-center gap-4 mb-8 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-700">
+                    <svg width="40" height="40" viewBox="0 0 40 40">
+                        <path d="M20 5 L5 20 L8 20 L8 35 L32 35 L32 20 L35 20 Z" fill="none" stroke="currentColor" stroke-width="1.5" />
+                        <path d="M17 35 L17 27 L23 27 L23 35" fill="none" stroke="currentColor" stroke-width="1.5" />
+                    </svg>
+                    <div class="flex flex-col leading-[0.8]">
+                        <span class="text-[8px] font-bold tracking-[0.4em] uppercase mb-1">La Casa de las</span>
+                        <span class="text-2xl font-black tracking-tighter uppercase">CORTINAS</span>
+                    </div>
+                </div>
+                <p class="text-white/20 text-xs uppercase tracking-widest leading-loose max-w-sm">
+                    Sistemas de arquitectura textil de alta prestación. Especialistas en el control de la luz natural mediante ingeniería aplicada.
+                </p>
+                <div class="flex space-x-4 mt-8">
+                    <a href="https://www.instagram.com/lacasadelascortinasok/" target="_blank" class="text-white/40 hover:text-[#00e5ff] text-2xl transition-colors"><i class='bx bxl-instagram'></i></a>
+                </div>
+            </div>
+            <div>
+                <h5 class="text-[10px] font-bold uppercase tracking-[0.4em] text-white/40 mb-8">Navegación</h5>
+                <ul class="space-y-4 text-[10px] uppercase tracking-widest">
+                    <li><a href="index.html" class="hover:text-[#00e5ff]">Inicio</a></li>
+                    <li><a href="index.html#coleccion" class="hover:text-[#00e5ff]">Colecciones</a></li>
+                    <li><a href="alianzas.html" class="hover:text-[#00e5ff]">Portal Partners</a></li>
+                    <li><a href="profesionales.html" class="hover:text-[#00e5ff]">Profesionales</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-[10px] font-bold uppercase tracking-[0.4em] text-white/40 mb-8">Contacto & Legales</h5>
+                <ul class="space-y-4 text-[10px] uppercase tracking-widest">
+                    <li><a href="javascript:void(0)" onclick="openWhatsApp()" class="hover:text-[#25D366] text-[#25D366]"><i class='bx bxl-whatsapp'></i> WhatsApp</a></li>
+                    <li><a href="mailto:lacasadelascortinasok@gmail.com" class="hover:text-[#ab47bc]">Email Comercial</a></li>
+                    <li class="pt-4"><a href="#" class="text-white/20 hover:text-white">Términos y Condiciones</a></li>
+                    <li><a href="#" class="text-white/20 hover:text-white">Políticas de Privacidad</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[8px] uppercase tracking-[0.5em] text-white/10 gap-4">
+            <p>© 2026 LA CASA DE LAS CORTINAS. TODOS LOS DERECHOS RESERVADOS.</p>
+            <p>DESIGNED BY ARCHI / POWERED BY X-1</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = CONFIG.SUPABASE_URL;
+        const SUPABASE_KEY = CONFIG.SUPABASE_KEY;
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        document.getElementById('proForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const status = document.getElementById('formStatus');
+
+            btn.innerText = 'VALIDANDO...';
+            btn.style.opacity = '0.5';
+
+            const payload = {
+                nombre_completo: document.getElementById('nombre').value,
+                estudio_empresa: document.getElementById('estudio').value,
+                telefono: document.getElementById('telefono').value,
+                email: document.getElementById('email').value,
+                estado: 'pendiente',
+                tier: 'VIP'
+            };
+
+            try {
+                const { error } = await supabaseClient.from('profesional_leads').insert([payload]);
+                if (error) throw error;
+
+                status.innerText = 'SOLICITUD REGISTRADA // REVISIÓN EN CURSO';
+                status.style.color = '#ab47bc';
+                status.classList.add('opacity-100');
+                e.target.reset();
+            } catch (err) {
+                status.innerText = 'ERROR EN LA RED SEGURA // REINTENTE';
+                status.style.color = '#ff4b4b';
+                status.classList.add('opacity-100');
+            } finally {
+                btn.innerText = 'SOLICITAR ACCESO VIP';
+                btn.style.opacity = '1';
+            }
+        });
+    </script>
+    <script src="agents/brevo_crm.js"></script>
+</body>
+
+</html>

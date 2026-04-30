@@ -1,0 +1,305 @@
+/*
+ * ARCHI DESIGN SYSTEM - HIGH-TECH DASHBOARD
+ * Concept: Vegas Pro Technical Precision
+ */
+
+:root {
+    /* 🛠️ Acentos Vegas (High-Tech Dashboard) */
+    --color-cyan: #00e5ff;
+    --color-violet: #ab47bc;
+    --color-vison: var(--color-cyan);
+    /* Compatibility with existing classes */
+
+    /* 🌑 Extreme Dark Palette (Ultra-Modern Upgrade) */
+    --color-negro-fondo: #050505;
+    --color-negro-mate: #010101;
+    --color-negro-vegas: #0a0a0a;
+    --color-grafito: #111111;
+    --color-crudo: #fafafa;
+    --color-silver: #c0c0c0;
+
+    /* ⚡ Vegas Accents */
+    --color-blue-electric: #00e5ff;
+    --color-violet-tech: #ab47bc;
+
+    /* 🖋️ Typography */
+    --font-serif: 'Playfair Display', serif;
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Montserrat', sans-serif;
+
+    /* 🎬 Motion */
+    --transition-smooth: cubic-bezier(0.19, 1, 0.22, 1) 0.8s;
+    --transition-tech: cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+
+    /* 💎 Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.02);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.05);
+    --glass-blur: blur(25px);
+    --neon-shadow-blue: 0 0 30px rgba(0, 229, 255, 0.2);
+    --neon-shadow-violet: 0 0 30px rgba(171, 71, 188, 0.2);
+
+    /* 📐 Borders */
+    --border-radius-tech: 2px;
+}
+
+/* 💠 Tech Modal System */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s var(--transition-tech);
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-container {
+    background: #000;
+    border: 1px solid var(--color-cyan);
+    padding: 3rem;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.4s var(--transition-tech);
+    box-shadow: var(--shadow-tech);
+}
+
+.modal-overlay.active .modal-container {
+    transform: scale(1);
+}
+
+.modal-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.modal-close:hover {
+    color: var(--color-violet);
+}
+
+.modal-content h3 {
+    font-family: var(--font-primary);
+    font-weight: 800;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.modal-content p {
+    font-family: var(--font-secondary);
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+/* Technical Utils */
+.text-gradient {
+    background: linear-gradient(90deg, var(--color-cyan), var(--color-violet));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bg-gradient-tech {
+    background: linear-gradient(135deg, var(--color-blue-electric), var(--color-violet-tech));
+}
+
+.glass-panel {
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    border: var(--glass-border);
+}
+
+/* Base Reset */
+body {
+    background-color: var(--color-negro-mate);
+    /* Vegas Mode */
+    color: var(--color-crudo);
+    font-family: var(--font-body);
+    font-weight: 300;
+    overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+}
+
+/* Utility Classes */
+.text-luxury {
+    color: var(--color-vison);
+}
+
+.bg-glass {
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    border: var(--glass-border);
+}
+
+/* Animations */
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-entry {
+    animation: fadeInSlide 0.8s var(--transition-smooth) forwards;
+}
+
+/* 💠 Glow Button & Scroll Reveal */
+.glow-button {
+    padding: 20px 40px;
+    background: transparent;
+    border: 1px solid var(--color-cyan);
+    color: var(--color-cyan);
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s var(--transition-tech);
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+}
+
+.glow-button:hover {
+    background: var(--color-cyan);
+    color: #000;
+    box-shadow: 0 0 50px rgba(0, 229, 255, 0.5);
+    transform: scale(1.05);
+}
+
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-on-scroll.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.glass-bg {
+    background: rgba(255, 255, 255, 0.03);
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+}
+
+/* 💠 Global Vegas UI Components */
+.nav-link-custom {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    transition: all 0.3s ease;
+}
+
+.nav-link-custom:hover {
+    color: #00e5ff;
+    text-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
+}
+
+.vegas-glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 3rem;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.vegas-glass-card:hover {
+    border-color: #00e5ff;
+    box-shadow: 0 0 40px rgba(0, 229, 255, 0.1);
+    transform: translateY(-5px);
+}
+
+.vegas-form-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.2rem 0;
+    width: 100%;
+    color: white;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.vegas-form-input:focus {
+    border-bottom: 1px solid #00e5ff;
+    box-shadow: 0 10px 20px -10px rgba(0, 229, 255, 0.2);
+}
+
+.vegas-floating-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 0.3rem;
+    display: block;
+}
+
+.vegas-btn-neon {
+    background: #00e5ff;
+    color: black;
+    padding: 1.2rem 3rem;
+    border-radius: 50px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
+}
+
+.vegas-btn-neon:hover {
+    background: white;
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.4);
+}
+
+@keyframes pulse-vip {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.4); }
+    70% { transform: scale(1.02); box-shadow: 0 0 0 15px rgba(0, 229, 255, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 229, 255, 0); }
+}
+
+.pulse-vip {
+    animation: pulse-vip 3s infinite;
+}
