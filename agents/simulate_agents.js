@@ -2,6 +2,7 @@ const sreAgent = require('./sre_agent');
 const seoAgent = require('./seo_agent');
 const securityAgent = require('./security_agent');
 const cmAgent = require('./cm_agent');
+const gscAgent = require('./gsc_agent');
 
 async function orchestrateAgents() {
     console.log('🏁 [ORCHESTRATOR] Starting global maintenance sequence...\n');
@@ -11,6 +12,7 @@ async function orchestrateAgents() {
         await seoAgent();
         await securityAgent();
         await cmAgent();
+        await gscAgent();
         
         console.log('\n✨ [ORCHESTRATOR] All agents have completed their tasks.');
     } catch (error) {
