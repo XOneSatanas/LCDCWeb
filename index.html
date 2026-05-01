@@ -1138,14 +1138,40 @@
         AOS.init({ once: true, offset: 100, duration: 1000 });
 
         function openModal(id) {
-            document.getElementById(id).style.display = 'flex';
+            const modal = document.getElementById(id);
+            if (!modal) return;
+            modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
+            // Guardar el elemento que tenía el foco antes de abrir
+            window.lastFocusedElement = document.activeElement;
+            // Mover foco al modal
+            modal.setAttribute('aria-modal', 'true');
         }
 
         function closeModal(id) {
-            document.getElementById(id).style.display = 'none';
+            const modal = document.getElementById(id);
+            if (!modal) return;
+            modal.style.display = 'none';
             document.body.style.overflow = 'auto';
+            modal.removeAttribute('aria-modal');
+            // Devolver el foco al elemento original
+            if (window.lastFocusedElement) {
+                window.lastFocusedElement.focus();
+            }
         }
+
+        // Cerrar modales con tecla ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modales = document.querySelectorAll('.vegas-modal');
+                modales.forEach(modal => {
+                    if (modal.style.display === 'flex') {
+                        const id = modal.id;
+                        if (typeof closeModal === 'function') closeModal(id);
+                    }
+                });
+            }
+        });
 
         function iniciarAsesoria(type) {
             const msgs = {
@@ -1188,6 +1214,60 @@
         });
     </script>
 
+<!-- ============================================ -->
+<!-- MENÚ MÓVIL FUNCIONAL (DRAWER) -->
+<!-- ============================================ -->
+<div id="mobile-drawer" class="fixed inset-0 z-[200] bg-black/95 backdrop-blur-xl transform -translate-x-full transition-transform duration-500 ease-out lg:hidden" style="display: none;">
+    <div class="flex flex-col h-full p-8 pt-24">
+        <button id="close-drawer" class="absolute top-6 right-6 text-4xl text-white/70 hover:text-[#00e5ff]" title="Cerrar menú">
+            <i class='bx bx-x'></i>
+        </button>
+        <nav class="flex flex-col space-y-8 text-center">
+            <a href="index.html" class="nav-link-custom text-2xl py-4 border-b border-white/10">Inicio</a>
+            <a href="#coleccion" class="nav-link-custom text-2xl py-4 border-b border-white/10">Colección</a>
+            <a href="#automatizaciones" class="nav-link-custom text-2xl py-4 border-b border-white/10 text-[#ab47bc]">Automatización</a>
+            <a href="alianzas.html" class="nav-link-custom text-2xl py-4 border-b border-white/10 text-[#FF6B00]">Portal Partners</a>
+            <a href="profesionales.html" class="nav-link-custom text-2xl py-4">Profesionales</a>
+        </nav>
+        <div class="mt-auto pt-8 text-center">
+            <button onclick="openWhatsApp()" class="bg-[#00e5ff] text-black px-8 py-4 rounded-full text-sm font-black uppercase tracking-widest">
+                <i class='bx bxl-whatsapp text-xl mr-2'></i> Contacto
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Control del menú móvil
+    (function() {
+        const drawer = document.getElementById('mobile-drawer');
+        const openBtn = document.querySelector('button.lg\\:hidden');
+        const closeBtn = document.getElementById('close-drawer');
+        
+        if (!drawer || !openBtn) return;
+        
+        function openDrawer() {
+            drawer.style.display = 'flex';
+            setTimeout(() => { drawer.style.transform = 'translateX(0)'; }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeDrawer() {
+            drawer.style.transform = 'translateX(-100%)';
+            setTimeout(() => { drawer.style.display = 'none'; }, 500);
+            document.body.style.overflow = 'auto';
+        }
+        
+        openBtn.addEventListener('click', openDrawer);
+        if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+        drawer.addEventListener('click', function(e) { if (e.target === drawer) closeDrawer(); });
+        
+        // Cerrar con tecla ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && drawer.style.display === 'flex') closeDrawer();
+        });
+    })();
+</script>
 </body>
 
 </html>
