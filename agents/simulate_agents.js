@@ -16,6 +16,10 @@ async function orchestrateAgents() {
         
         console.log('\n✨ [ORCHESTRATOR] All agents have completed their tasks.');
     } catch (error) {
+        if (error?.code === 'insufficient_quota') {
+            console.warn('⚠️ [ORCHESTRATOR] Saldo insuficiente en API, usando modo offline');
+            return "Lo siento, el asistente está temporalmente en mantenimiento. Escríbenos por WhatsApp.";
+        }
         console.error('💥 [ORCHESTRATOR] Critical failure in orchestration:', error.message);
     }
 }
