@@ -50,6 +50,20 @@
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
     </style>
+    <!-- Brevo Conversations {literal} -->
+    <script>
+        (function(d, w, c) {
+            w.BrevoConversationsID = '69f4cfd8ecdb886dba08cde5';
+            w[c] = w[c] || function() {
+                (w[c].q = w[c].q || []).push(arguments);
+            };
+            var s = d.createElement('script');
+            s.async = true;
+            s.src = 'https://conversations-widget.brevo.com/brevo-conversations.js';
+            if (d.head) d.head.appendChild(s);
+        })(document, window, 'BrevoConversations');
+    </script>
+    <!-- /Brevo Conversations {/literal} -->
 </head>
 <body class="text-on-background antialiased">
 
