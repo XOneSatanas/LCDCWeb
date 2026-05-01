@@ -1,64 +1,119 @@
 // ============================================
 // BREVO CHAT WIDGET - La Casa de las Cortinas
-// Versión corregida - sin conflicto con WhatsApp
+// Versión corregida con inicialización forzada
 // ============================================
 
 (function() {
-    // 1. Eliminar cualquier botón de chat previo que pueda existir
-    const cleanup = () => {
-        const existingButtons = document.querySelectorAll('.custom-chat-btn, #custom-chat-btn, .floating-chat, .sticky-wa, [onclick*="openWhatsApp"]');
-        existingButtons.forEach(btn => {
-            // Solo eliminar si es un botón flotante (no los del menú o footer)
-            const style = window.getComputedStyle(btn);
-            if (style.position === 'fixed' || btn.classList.contains('sticky-wa') || btn.classList.contains('custom-chat-btn')) {
-                btn.remove();
-            }
-        });
-    };
+    console.log('💬 Iniciando Brevo Chat Widget...');
     
-    // Ejecutar limpieza inicial y tras un pequeño delay
-    cleanup();
-    setTimeout(cleanup, 2000);
+    // El ID ya está en el head, solo configuramos y forzamos
+    let attempts = 0;
+    const maxAttempts = 30;
     
-    // 2. Configurar Brevo Conversations
-    window.BrevoConversations = window.BrevoConversations || [];
-    
-    // 3. Cargar el script de Brevo
-    (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "https://conversations-widget.brevo.com/brevo-conversations.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, "script", "brevo-conversations"));
-    
-    // 4. Configurar el widget (después de que cargue)
-    setTimeout(() => {
-        if (window.BrevoConversations) {
-            window.BrevoConversations.push(['config', {
+    function initBrevoChat() {
+        if (typeof window.BrevoConversations !== 'undefined' && window.BrevoConversations) {
+            console.log('✅ Brevo Conversations detectado');
+            
+            // Configurar el widget
+            window.BrevoConversations('config', {
                 color: '#00e5ff',
                 position: 'right',
-                greeting: '¡Hola! 👋 ¿En qué podemos ayudarte con cortinas y toldos?'
-            }]);
-            console.log('✅ Brevo Chat inicializado correctamente');
+                greeting: '¡Hola! 👋 ¿En qué podemos ayudarte con cortinas y toldos?',
+                businessName: 'La Casa de las Cortinas',
+                businessLogo: 'https://lacasadelascortinas.com.ar/assets/images/logo-main.webp'
+            });
+            
+            // Opcional: abrir automáticamente después de 3 segundos (solo en desktop)
+            if (window.innerWidth > 768) {
+                setTimeout(() => {
+                    try {
+                        window.BrevoConversations('open');
+                        console.log('💬 Chat abierto automáticamente');
+                    } catch(e) { /* silencioso */ }
+                }, 5000);
+            }
+            
+            return true;
+        } else if (attempts < maxAttempts) {
+            attempts++;
+            console.log(`⏳ Esperando Brevo Conversations... intento ${attempts}/${maxAttempts}`);
+            setTimeout(initBrevoChat, 500);
+        } else {
+            console.error('❌ Brevo Conversations no cargó. Verifica el ID y la red.');
+            // Fallback: mostrar mensaje
+            showFallbackButton();
         }
-    }, 1500);
+        return false;
+    }
     
-    // 5. Opcional: remover también estilos que puedan bloquear
-    const style = document.createElement('style');
-    style.textContent = `
-        /* Asegurar que el botón de Brevo sea visible */
-        .brevo-conversations-button {
-            z-index: 9999 !important;
-            bottom: 20px !important;
-            right: 20px !important;
-        }
-        /* Ocultar cualquier otro botón flotante */
-        .floating-chat-btn, .custom-chat-btn, #custom-chat-btn, .sticky-wa {
-            display: none !important;
-        }
-    `;
-    document.head.appendChild(style);
+    function showFallbackButton() {
+        const btn = document.createElement('div');
+        btn.innerHTML = '💬';
+        btn.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #00e5ff, #ab47bc);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            cursor: pointer;
+            z-index: 9999;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        `;
+        btn.onclick = () => {
+            window.openWhatsApp('Hola, vi el chat pero no funcionaba. Necesito ayuda.');
+        };
+        document.body.appendChild(btn);
+        console.log('⚠️ Fallback: botón de WhatsApp activado');
+    }
     
-    console.log('💬 Brevo Chat Widget listo (sin conflicto con WhatsApp)');
+    // Eliminar cualquier botón flotante previo
+    function cleanupOldButtons() {
+        const oldButtons = document.querySelectorAll('.floating-wa, .sticky-wa, .custom-chat-btn, #custom-chat-btn, [onclick*="openWhatsApp"].floating');
+        oldButtons.forEach(btn => {
+            if (btn && btn.remove) {
+                btn.remove();
+                console.log('🧹 Botón antiguo eliminado');
+            }
+        });
+    }
+    
+    // Estilos para asegurar visibilidad
+    function addStyles() {
+        const style = document.createElement('style');
+        style.textContent = `
+            .brevo-conversations-button {
+                z-index: 9999 !important;
+                bottom: 80px !important;
+                right: 20px !important;
+                position: fixed !important;
+            }
+            .brevo-conversations-iframe {
+                z-index: 9998 !important;
+            }
+            .floating-wa, .sticky-wa, .custom-chat-btn, #custom-chat-btn {
+                display: none !important;
+            }
+            /* Ajustar navbar para que no opaque el chat */
+            header {
+                z-index: 100 !important;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // Ejecutar
+    cleanupOldButtons();
+    addStyles();
+    setTimeout(initBrevoChat, 1000);
+    
+    // También intentar cuando el DOM esté listo
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => setTimeout(initBrevoChat, 500));
+    }
 })();
