@@ -6,7 +6,10 @@
 (function() {
     console.log('💬 Iniciando Brevo Chat Widget...');
     
-    // El ID ya está en el head, solo configuramos y forzamos
+    // Asegurar que el ID esté definido (triple respaldo)
+    window.BrevoConversationsID = window.BrevoConversationsID || '69f4cfd8ecdb886dba08cde5';
+    
+    // El ID ya debería estar en el head, pero si falla lo definimos arriba
     let attempts = 0;
     const maxAttempts = 30;
     
