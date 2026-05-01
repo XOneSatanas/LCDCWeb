@@ -6,8 +6,56 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 // Configuración
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'AIzaSyB5BdSBtYYwSr_d25L8aMOHx56K9KaU9mI';
-const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+if (!GEMINI_API_KEY) {
+    console.error('❌ Error: GEMINI_API_KEY no configurada');
+}
+const genAI = new GoogleGenerativeAI(GEMINI_API_KEY || 'dummy-key');
+const { createClient } = require('@supabase/supabase-js');
+
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_KEY;
+
+// Guardar en Supabase
+async function updateHistory(sessionId, userMessage, aiResponse) {
+    if (!SUPABASE_URL || !SUPABASE_KEY) return;
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    
+    try {
+        // Buscar conversación existente
+        const { data: existing } = await supabase
+            .from('chat_conversations')
+            .select('*')
+            .eq('session_id', sessionId)
+            .single();
+
+        const messages = existing ? existing.messages : [];
+        messages.push({ role: 'user', content: userMessage, timestamp: new Date().toISOString() });
+        messages.push({ role: 'assistant', content: aiResponse, timestamp: new Date().toISOString() });
+
+        if (existing) {
+            await supabase
+                .from('chat_conversations')
+                .update({ 
+                    messages: messages,
+                    last_activity: new Date().toISOString(),
+                    unresponded: false 
+                })
+                .eq('session_id', sessionId);
+        } else {
+            await supabase
+                .from('chat_conversations')
+                .insert([{
+                    session_id: sessionId,
+                    messages: messages,
+                    last_activity: new Date().toISOString(),
+                    unresponded: false
+                }]);
+        }
+    } catch (e) {
+        console.error('Error saving history:', e);
+    }
+}
 
 // System prompt de LUZ (su personalidad)
 const SYSTEM_PROMPT = `Eres LUZ, una asesora experta en cortinas, toldos y automatización para "La Casa de las Cortinas" en Rosario, Argentina.
@@ -92,6 +140,9 @@ exports.handler = async (event) => {
         const response = result.response.text();
         
         console.log(`🤖 Respuesta generada: "${response.substring(0, 100)}..."`);
+        
+        // Guardar historial de forma asíncrona (no bloqueante)
+        updateHistory(senderId || conversationId || 'unknown-session', userMessage, response).catch(console.error);
         
         // Devolver respuesta para que Brevo la envíe al chat, y para chat.js usando "reply"
         return {

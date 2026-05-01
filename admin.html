@@ -154,6 +154,10 @@
                         <span class="material-symbols-outlined">inventory_2</span>
                         <span>Parts Inventory</span>
                     </a>
+                    <a id="nav-chatbot" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-all cursor-pointer" onclick="showView('chatbot')">
+                        <span class="material-symbols-outlined">chat_bubble</span>
+                        <span>Luz AI Chat</span>
+                    </a>
                 </nav>
             </div>
             <div class="mt-auto p-6 space-y-6">
@@ -326,6 +330,62 @@
                 </div>
             </div>
 
+            <!-- VIEW: CHATBOT -->
+            <div id="view-chatbot" class="hidden max-w-7xl mx-auto space-y-8">
+                <div class="flex justify-between items-end">
+                    <div>
+                        <h2 class="text-3xl font-black text-slate-900 tracking-tighter">AI Chat Management</h2>
+                        <p class="text-slate-500">Monitor and intervene in Luz AI conversations.</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <span id="chat-status" class="px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700 flex items-center gap-1">
+                            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                            AI Agent Online
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Conversations List -->
+                    <div class="lg:col-span-1 bg-white border border-slate-200 rounded-2xl overflow-hidden flex flex-col h-[700px]">
+                        <div class="p-4 border-b border-slate-200 bg-slate-50 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-slate-400">search</span>
+                            <input type="text" id="chat-search" placeholder="Filter conversations..." class="w-full bg-transparent outline-none text-sm">
+                        </div>
+                        <div id="chat-list" class="divide-y divide-slate-100 overflow-y-auto">
+                            <div class="p-8 text-center text-slate-400">
+                                <span class="material-symbols-outlined text-4xl mb-2 opacity-20">chat_bubble</span>
+                                <p class="text-xs uppercase tracking-widest">Loading conversations...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chat View -->
+                    <div class="lg:col-span-2 bg-white border border-slate-200 rounded-2xl flex flex-col h-[700px]">
+                        <div id="chat-header" class="p-4 border-b border-slate-200 bg-slate-50 flex justify-between items-center">
+                            <h3 class="font-bold text-slate-700">Select a conversation</h3>
+                            <span id="active-session-id" class="text-[10px] text-slate-400 font-mono"></span>
+                        </div>
+                        <div id="chat-messages-container" class="flex-1 p-6 overflow-y-auto space-y-4 bg-slate-50/50">
+                            <div class="flex flex-col items-center justify-center h-full text-slate-300">
+                                <span class="material-symbols-outlined text-6xl mb-4 opacity-10">forum</span>
+                                <p class="text-sm font-bold uppercase tracking-widest">No Active Thread</p>
+                            </div>
+                        </div>
+                        <div class="p-4 border-t border-slate-200 bg-white">
+                            <div class="flex gap-2">
+                                <textarea id="quick-reply" class="flex-1 p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-cyan-500/20 transition-all" rows="2" placeholder="Force manual reply..."></textarea>
+                                <button onclick="sendManualReply()" class="bg-slate-900 text-white px-6 rounded-xl font-bold hover:brightness-125 transition-all flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-sm">send</span>
+                                    <span>SEND</span>
+                                </button>
+                            </div>
+                            <p class="text-[9px] text-slate-400 mt-2 uppercase tracking-widest">Manual intervention will pause the AI for this session for 5 minutes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- VIEW: CALENDAR -->
             <div id="view-calendar" class="hidden max-w-7xl mx-auto space-y-8">
                 <div class="flex justify-between items-center">
@@ -403,8 +463,104 @@
         };
 
         // NAVIGATION LOGIC
+        // ============================================
+        // CHATBOT MANAGEMENT
+        // ============================================
+        let currentChatSessionId = null;
+
+        async function loadConversations() {
+            try {
+                const response = await fetch('/.netlify/functions/get-conversations');
+                const data = await response.json();
+                
+                const container = document.getElementById('chat-list');
+                if (data.length === 0) {
+                    container.innerHTML = '<div class="p-8 text-center text-slate-400 text-xs uppercase tracking-widest">No conversations found</div>';
+                    return;
+                }
+
+                container.innerHTML = data.map(conv => {
+                    const lastMsg = conv.messages[conv.messages.length - 1];
+                    const time = new Date(conv.last_activity).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    const isUnread = conv.unresponded;
+                    
+                    return `
+                        <div class="p-4 cursor-pointer hover:bg-slate-50 transition-all ${currentChatSessionId === conv.session_id ? 'bg-cyan-50/50 border-r-4 border-cyan-500' : ''}" 
+                             onclick="selectConversation('${conv.session_id}')">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="font-bold text-sm text-slate-700">${conv.user_id || 'Visitor ' + conv.session_id.substring(0,4)}</span>
+                                <span class="text-[10px] text-slate-400 font-bold">${time}</span>
+                            </div>
+                            <div class="text-xs text-slate-500 truncate pr-4">${lastMsg ? lastMsg.content : 'No messages'}</div>
+                            ${isUnread ? '<div class="mt-2"><span class="bg-orange-100 text-orange-600 text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-widest">Pending</span></div>' : ''}
+                        </div>
+                    `;
+                }).join('');
+            } catch (error) {
+                console.error('Error loading conversations:', error);
+            }
+        }
+
+        async function selectConversation(sessionId) {
+            currentChatSessionId = sessionId;
+            document.getElementById('active-session-id').innerText = `ID: ${sessionId}`;
+            
+            // Re-render list to show active state
+            loadConversations();
+            
+            try {
+                const response = await fetch(`/.netlify/functions/get-conversations?sessionId=${sessionId}`);
+                const conversations = await response.json();
+                const conv = conversations.find(c => c.session_id === sessionId);
+                
+                const container = document.getElementById('chat-messages-container');
+                if (!conv) {
+                    container.innerHTML = '<div class="p-8 text-center text-slate-400">Conversation not found</div>';
+                    return;
+                }
+
+                container.innerHTML = conv.messages.map(msg => `
+                    <div class="flex ${msg.role === 'assistant' ? 'justify-start' : 'justify-end'}">
+                        <div class="max-w-[80%] ${msg.role === 'assistant' ? 'bg-white border border-slate-200 text-slate-700' : 'bg-slate-900 text-white'} p-4 rounded-2xl shadow-sm text-sm">
+                            <p>${msg.content}</p>
+                            <span class="text-[9px] opacity-40 mt-2 block font-bold uppercase tracking-widest">${new Date(msg.timestamp).toLocaleTimeString()}</span>
+                        </div>
+                    </div>
+                `).join('');
+                
+                container.scrollTop = container.scrollHeight;
+            } catch (error) {
+                console.error('Error selecting conversation:', error);
+            }
+        }
+
+        async function sendManualReply() {
+            const input = document.getElementById('quick-reply');
+            const content = input.value.trim();
+            if (!content || !currentChatSessionId) return;
+
+            try {
+                const response = await fetch('/.netlify/functions/manual-reply', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        sessionId: currentChatSessionId,
+                        message: content
+                    })
+                });
+                
+                if (response.ok) {
+                    input.value = '';
+                    selectConversation(currentChatSessionId);
+                    logToTerminal(`SYSTEM: Manual reply sent to session ${currentChatSessionId}`, 'cyan');
+                }
+            } catch (error) {
+                console.error('Error sending manual reply:', error);
+            }
+        }
+
         function showView(view) {
-            const views = ['overview', 'agents', 'calendar', 'inventory'];
+            const views = ['overview', 'agents', 'calendar', 'inventory', 'chatbot'];
             views.forEach(v => {
                 document.getElementById(`view-${v}`).classList.add('hidden');
                 document.getElementById(`nav-${v}`).classList.remove('text-cyan-600', 'bg-cyan-50/50', 'border-r-4', 'border-cyan-500', 'font-semibold');
@@ -414,6 +570,10 @@
             document.getElementById(`view-${view}`).classList.remove('hidden');
             document.getElementById(`nav-${view}`).classList.remove('text-slate-500');
             document.getElementById(`nav-${view}`).classList.add('text-cyan-600', 'bg-cyan-50/50', 'border-r-4', 'border-cyan-500', 'font-semibold');
+
+            if (view === 'chatbot') {
+                loadConversations();
+            }
         }
 
         // LOGIN LOGIC
