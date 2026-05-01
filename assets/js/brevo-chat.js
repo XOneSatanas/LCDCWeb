@@ -25,6 +25,15 @@
                 businessName: 'La Casa de las Cortinas',
                 businessLogo: 'https://lacasadelascortinas.com.ar/assets/images/logo-main.webp'
             });
+
+            // Suscribirse a mensajes recibidos para responder automáticamente
+            window.BrevoConversations('subscribe', 'message:received', function(payload) {
+                // Solo responder si el mensaje es del visitante (no de un agente)
+                if (payload && !payload.agentId) {
+                    console.log('💬 Mensaje del usuario recibido, consultando IA...');
+                    handleAIChatResponse(payload.content);
+                }
+            });
             
             // Opcional: abrir automáticamente después de 3 segundos (solo en desktop)
             if (window.innerWidth > 768) {
@@ -115,6 +124,28 @@
     addStyles();
     setTimeout(initBrevoChat, 1000);
     
+    async function handleAIChatResponse(userMessage) {
+        try {
+            // Pequeño delay para que parezca que está escribiendo
+            setTimeout(async () => {
+                const response = await fetch('/.netlify/functions/chat-agent', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: userMessage })
+                });
+                
+                const data = await response.json();
+                
+                if (data.reply) {
+                    window.BrevoConversations('send', data.reply);
+                    console.log('🤖 Respuesta de IA enviada');
+                }
+            }, 1500);
+        } catch (error) {
+            console.error('❌ Error en el Agente de IA:', error);
+        }
+    }
+
     // También intentar cuando el DOM esté listo
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => setTimeout(initBrevoChat, 500));
