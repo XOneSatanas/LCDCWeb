@@ -150,30 +150,23 @@ async function syncToBrevo(payload) {
         return { success: false, error: 'No email provided' };
     }
     
-    if (BREVO_CONFIG.API_KEY === 'YOUR_BREVO_API_KEY') {
-        console.warn('⚠️ [BREVO CRM] API Key no configurada. Modo simulación activado.');
-        return { success: true, simulated: true, message: 'Simulated - API Key not configured' };
-    }
-    
     try {
-        const response = await fetch(BREVO_CONFIG.ENDPOINT, {
+        const response = await fetch('/.netlify/functions/crm-sync', {
             method: 'POST',
             headers: {
-                'accept': 'application/json',
-                'api-key': BREVO_CONFIG.API_KEY,
                 'content-type': 'application/json'
             },
             body: JSON.stringify(payload)
         });
         
-        if (response.ok) {
-            const data = await response.json();
-            console.log('✅ [BREVO CRM] Contacto sincronizado:', data.id || 'OK');
-            return { success: true, id: data.id };
+        const result = await response.json();
+        
+        if (response.ok && result.success) {
+            console.log('✅ [BREVO CRM] Contacto sincronizado vía Proxy');
+            return { success: true, id: result.id };
         } else {
-            const errData = await response.json();
-            console.error('❌ [BREVO CRM] Error Brevo:', errData);
-            return { success: false, error: errData.message || 'API Error' };
+            console.error('❌ [BREVO CRM] Error Proxy:', result.error);
+            return { success: false, error: result.error || 'Proxy Error' };
         }
         
     } catch (error) {
