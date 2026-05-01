@@ -12,7 +12,7 @@
     X-Content-Type-Options = "nosniff"
     X-XSS-Protection = "1; mode=block"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Content-Security-Policy = "upgrade-insecure-requests; block-all-mixed-content; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://fonts.googleapis.com https://conversations-widget.brevo.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://conversations-widget.brevo.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.brevo.com https://conversations-widget.brevo.com; frame-src 'self' https://conversations-widget.brevo.com;"
+    Content-Security-Policy = "upgrade-insecure-requests; block-all-mixed-content; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://fonts.googleapis.com https://conversations-widget.brevo.com https://unpkg.com https://connect.facebook.net https://www.googletagmanager.com https://cse.google.com https://www.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://conversations-widget.brevo.com https://unpkg.com https://www.google.com; font-src 'self' https://fonts.gstatic.com https://unpkg.com; connect-src 'self' https://api.brevo.com https://conversations-widget.brevo.com https://www.facebook.com https://www.google-analytics.com https://stats.g.doubleclick.net https://google.com; frame-src 'self' https://conversations-widget.brevo.com https://www.facebook.com https://www.google.com; img-src 'self' data: https://lacasadelascortinas.com.ar https://www.facebook.com https://www.google.com https://www.google-analytics.com https://conversations-widget.brevo.com;"
 
 # Permitir CORS para las funciones
 [[headers]]
