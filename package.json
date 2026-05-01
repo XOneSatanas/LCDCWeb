@@ -13,10 +13,11 @@
     "start": "node mock_n8n_server.js"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "cors": "^2.8.5",
+    "@google/generative-ai": "^0.24.1",
     "axios": "^1.6.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
+    "express": "^4.18.2",
     "googleapis": "^129.0.0"
   }
 }

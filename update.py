@@ -1,78 +1,176 @@
 import os
-import re
 
-html_files = [f for f in os.listdir('.') if f.endswith('.html')]
+files = [
+    "index.html",
+    "admin.html",
+    "alianzas.html",
+    "profesionales.html",
+    "privacidad.html",
+    "terminos.html"
+]
 
-footer_html = """
-    <!-- FOOTER GLOBALY INJECTED -->
-    <footer class="py-24 px-10 border-t border-white/5 bg-[#010101]">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
-            <div class="col-span-2">
-                <div class="flex items-center gap-4 mb-8 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-700">
-                    <svg width="40" height="40" viewBox="0 0 40 40">
-                        <path d="M20 5 L5 20 L8 20 L8 35 L32 35 L32 20 L35 20 Z" fill="none" stroke="currentColor" stroke-width="1.5" />
-                        <path d="M17 35 L17 27 L23 27 L23 35" fill="none" stroke="currentColor" stroke-width="1.5" />
-                    </svg>
-                    <div class="flex flex-col leading-[0.8]">
-                        <span class="text-[8px] font-bold tracking-[0.4em] uppercase mb-1">La Casa de las</span>
-                        <span class="text-2xl font-black tracking-tighter uppercase">CORTINAS</span>
-                    </div>
-                </div>
-                <p class="text-white/20 text-xs uppercase tracking-widest leading-loose max-w-sm">
-                    Sistemas de arquitectura textil de alta prestación. Especialistas en el control de la luz natural mediante ingeniería aplicada.
-                </p>
-                <div class="flex space-x-4 mt-8">
-                    <a href="https://www.instagram.com/lacasadelascortinasok/" target="_blank" class="text-white/40 hover:text-[#00e5ff] text-2xl transition-colors"><i class='bx bxl-instagram'></i></a>
-                </div>
-            </div>
-            <div>
-                <h5 class="text-[10px] font-bold uppercase tracking-[0.4em] text-white/40 mb-8">Navegación</h5>
-                <ul class="space-y-4 text-[10px] uppercase tracking-widest">
-                    <li><a href="index.html" class="hover:text-[#00e5ff]">Inicio</a></li>
-                    <li><a href="index.html#coleccion" class="hover:text-[#00e5ff]">Colecciones</a></li>
-                    <li><a href="alianzas.html" class="hover:text-[#00e5ff]">Portal Partners</a></li>
-                    <li><a href="profesionales.html" class="hover:text-[#00e5ff]">Profesionales</a></li>
-                </ul>
-            </div>
-            <div>
-                <h5 class="text-[10px] font-bold uppercase tracking-[0.4em] text-white/40 mb-8">Contacto & Legales</h5>
-                <ul class="space-y-4 text-[10px] uppercase tracking-widest">
-                    <li><a href="javascript:void(0)" onclick="openWhatsApp()" class="hover:text-[#25D366] text-[#25D366]"><i class='bx bxl-whatsapp'></i> WhatsApp</a></li>
-                    <li><a href="mailto:lacasadelascortinasok@gmail.com" class="hover:text-[#ab47bc]">Email Comercial</a></li>
-                    <li class="pt-4"><a href="#" class="text-white/20 hover:text-white">Términos y Condiciones</a></li>
-                    <li><a href="#" class="text-white/20 hover:text-white">Políticas de Privacidad</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="max-w-7xl mx-auto mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[8px] uppercase tracking-[0.5em] text-white/10 gap-4">
-            <p>© 2026 LA CASA DE LAS CORTINAS. TODOS LOS DERECHOS RESERVADOS.</p>
-            <p>DESIGNED BY ARCHI / POWERED BY X-1</p>
-        </div>
-    </footer>
-"""
+old_head = """    <!-- Brevo Conversations {literal} -->
+    <script>
+        (function(d, w, c) {
+            w.BrevoConversationsID = '69f4cfd8ecdb886dba08cde5';
+            w[c] = w[c] || function() {
+                (w[c].q = w[c].q || []).push(arguments);
+            };
+            var s = d.createElement('script');
+            s.async = true;
+            s.src = 'https://conversations-widget.brevo.com/brevo-conversations.js';
+            if (d.head) d.head.appendChild(s);
+        })(document, window, 'BrevoConversations');
+    </script>
+    <!-- /Brevo Conversations {/literal} -->"""
 
-for f in html_files:
+new_head = """    <!-- Brevo Conversations Widget - Versión Corregida -->
+    <script type="text/javascript">
+        (function() {
+            // Configuración directa
+            window.BrevoConversationsID = '69f4cfd8ecdb886dba08cde5';
+            window.BrevoConversations = window.BrevoConversations || [];
+            
+            // Configurar el widget ANTES de cargar el script
+            window.BrevoConversations.push(['config', {
+                color: '#00e5ff',
+                position: 'right',
+                greeting: '¡Hola! 👋 ¿En qué podemos ayudarte con cortinas y toldos?',
+                businessName: 'La Casa de las Cortinas',
+                loadDelay: 0
+            }]);
+            
+            // Cargar el script de Brevo
+            var s = document.createElement('script');
+            s.type = 'text/javascript';
+            s.async = true;
+            s.src = 'https://conversations-widget.brevo.com/brevo-conversations.js';
+            s.onload = function() {
+                console.log('✅ Brevo Conversations cargado exitosamente');
+                // Forzar la apertura después de cargar
+                setTimeout(function() {
+                    if (window.BrevoConversations) {
+                        window.BrevoConversations.push('open');
+                    }
+                }, 2000);
+            };
+            s.onerror = function() {
+                console.error('❌ Error cargando Brevo Conversations');
+            };
+            document.head.appendChild(s);
+        })();
+    </script>"""
+
+fallback_code = """
+<!-- Forzar inicialización de Brevo (fallback) -->
+<script>
+    (function() {
+        var maxAttempts = 30;
+        var attempts = 0;
+        
+        function checkAndInitBrevo() {
+            attempts++;
+            
+            // Método 1: Si existe la función global
+            if (typeof BrevoConversations !== 'undefined' && BrevoConversations && typeof BrevoConversations === 'function') {
+                console.log('✅ Brevo detectado (método 1), inicializando...');
+                try {
+                    BrevoConversations('config', {
+                        color: '#00e5ff',
+                        position: 'right',
+                        greeting: '¡Hola! 👋 ¿En qué podemos ayudarte?'
+                    });
+                    BrevoConversations('open');
+                } catch(e) { console.log('Error config:', e); }
+                return true;
+            }
+            
+            // Método 2: Si existe el array window.BrevoConversations
+            if (window.BrevoConversations && Array.isArray(window.BrevoConversations) && window.BrevoConversations.push !== Array.prototype.push) {
+                console.log('✅ Brevo detectado (método 2), configurando...');
+                try {
+                    window.BrevoConversations('config', {
+                        color: '#00e5ff',
+                        position: 'right',
+                        greeting: '¡Hola! 👋 ¿En qué podemos ayudarte?'
+                    });
+                    return true;
+                } catch(e) {}
+            }
+            
+            // Método 3: Buscar el iframe ya cargado
+            var iframe = document.querySelector('iframe[src*="brevo"], iframe[src*="conversations"]');
+            if (iframe) {
+                console.log('✅ Iframe de Brevo ya existe');
+                return true;
+            }
+            
+            if (attempts < maxAttempts) {
+                console.log('⏳ Esperando Brevo... intento ' + attempts);
+                setTimeout(checkAndInitBrevo, 500);
+            } else {
+                console.error('❌ Brevo no cargó después de ' + maxAttempts + ' intentos');
+                // Mostrar botón de respaldo
+                showFallbackChatButton();
+            }
+            return false;
+        }
+        
+        function showFallbackChatButton() {
+            if (document.getElementById('brevo-fallback-btn')) return;
+            var btn = document.createElement('div');
+            btn.id = 'brevo-fallback-btn';
+            btn.innerHTML = '💬';
+            btn.style.cssText = 'position:fixed;bottom:20px;right:20px;width:56px;height:56px;background:linear-gradient(135deg,#00e5ff,#ab47bc);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;cursor:pointer;z-index:9999;box-shadow:0 4px 12px rgba(0,0,0,0.3);';
+            btn.onclick = function() {
+                window.openWhatsApp('Hola, necesito ayuda con sus productos.');
+            };
+            document.body.appendChild(btn);
+            console.log('⚠️ Fallback: botón de WhatsApp');
+        }
+        
+        // Iniciar verificación después de 1 segundo
+        setTimeout(checkAndInitBrevo, 1000);
+        
+        // También verificar cuando el DOM esté listo
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                setTimeout(checkAndInitBrevo, 500);
+            });
+        }
+    })();
+</script>
+
+<!-- Estilos para asegurar que el botón sea visible -->
+<style>
+    /* Asegurar visibilidad del widget de Brevo */
+    .brevo-conversations-button {
+        z-index: 9999 !important;
+        bottom: 80px !important;
+        right: 20px !important;
+        position: fixed !important;
+        background: linear-gradient(135deg, #00e5ff, #ab47bc) !important;
+    }
+    .brevo-conversations-iframe {
+        z-index: 9998 !important;
+    }
+    /* Ocultar cualquier otro widget flotante de WhatsApp */
+    .sticky-wa, .floating-wa, .custom-chat-btn, #custom-chat-btn,
+    [class*="floating"], [id*="floating"] {
+        display: none !important;
+    }
+</style>
+</body>"""
+
+for f in files:
     with open(f, 'r', encoding='utf-8') as file:
         content = file.read()
     
-    # --- 1. Ensure Config.js is linked ---
-    if 'assets/js/config.js' not in content:
-        content = content.replace('</head>', '    <script src="assets/js/config.js"></script>\n</head>')
-
-    # --- 2. Fix WhatsApp ---
-    # Replace FAB Chat
-    content = re.sub(r'<!-- FAB:.*? -->\s*<a href="https://wa.me/.*?".*?</a>', '<!-- FAB: WHATSAPP TRIGGER -->\n    <a href="javascript:void(0)" onclick="openWhatsApp()" class="fab-chat hover:-translate-y-2 transition-transform" style="text-decoration: none; display: flex; align-items: center; justify-content: center; background: #25D366; color: white; border: none; box-shadow: 0 0 20px rgba(37,211,102,0.4);"><i class=\'bx bxl-whatsapp\'></i></a>', content, flags=re.DOTALL)
+    # Reemplazar old_head
+    content = content.replace(old_head, new_head)
     
-    # Update Navbar button
-    content = re.sub(r'class="btn-contact.*?WhatsApp</a>', 'class="btn-contact border border-[#00e5ff] text-[#00e5ff] px-8 py-2 uppercase text-[10px] tracking-widest hover:bg-[#00e5ff] hover:text-black transition-all inline-block" onclick="openWhatsApp()">WhatsApp</a>', content)
-    
-    # --- 3. Fix Footer ---
-    if '<footer' in content:
-        content = re.sub(r'<footer.*?</footer>', footer_html.strip(), content, count=1, flags=re.DOTALL)
-    else:
-        content = content.replace('</body>', f"{footer_html}\n</body>")
+    # Reemplazar body final
+    content = content.replace("</body>", fallback_code)
     
     with open(f, 'w', encoding='utf-8') as file:
         file.write(content)
-
-print(f"Mantenimiento completado en {len(html_files)} archivos.")

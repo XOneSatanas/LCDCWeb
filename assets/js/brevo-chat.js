@@ -1,82 +1,78 @@
 // ============================================
 // BREVO CHAT WIDGET - La Casa de las Cortinas
-// Versión Robusta con Patrón de Cola de Comandos
+// Versión Ultra-Robusta con BrevoConversationsSetup
 // ============================================
 
 (function() {
-    console.log('💬 Iniciando Agente de Chat...');
-    
-    // Configuración Inicial
+    console.log('💬 Configurando Agente de IA (BrevoConversationsSetup)...');
+
+    // 1. Definir el Setup Global ANTES de cargar nada
     window.BrevoConversationsID = '69f4cfd8ecdb886dba08cde5';
-    window.BrevoConversations = window.BrevoConversations || [];
     
-    // Comando de Configuración (vía Push para asegurar compatibilidad)
-    window.BrevoConversations.push(['config', {
+    window.BrevoConversationsSetup = {
+        // Estilos y comportamiento
         color: '#00e5ff',
         position: 'right',
         greeting: '¡Hola! 👋 ¿En qué podemos ayudarte con cortinas y toldos?',
-        businessName: 'La Casa de las Cortinas'
-    }]);
+        businessName: 'La Casa de las Cortinas',
+        
+        // EVENTO CRÍTICO: Captura de mensajes nuevos
+        onNewMessage: function(message) {
+            console.log('📩 Nuevo mensaje detectado:', message);
+            
+            // Solo responder si el mensaje viene del visitante
+            // Verificamos tanto autor como tipo para máxima compatibilidad
+            const isVisitor = message.type === 'visitor' || 
+                            message.authorType === 'visitor' || 
+                            (!message.agentId && !message.botId);
 
-    // Función para manejar la respuesta de la IA
+            if (isVisitor) {
+                const text = message.text || message.content;
+                if (text) {
+                    console.log('🤖 Consultando IA para el mensaje:', text);
+                    handleAIChatResponse(text);
+                }
+            }
+        },
+        
+        // Evento cuando el widget está listo
+        onReady: function() {
+            console.log('✅ Widget de Brevo totalmente listo');
+        }
+    };
+
+    // 2. Función de respuesta de IA
     async function handleAIChatResponse(userMessage) {
-        if (!userMessage) return;
-        console.log('🤖 Consultando Agente de IA para:', userMessage);
-        
         try {
-            const response = await fetch('/.netlify/functions/chat-agent', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: userMessage })
-            });
-            
-            const data = await response.json();
-            
-            if (data.reply) {
-                // Usar PUSH para enviar el mensaje de vuelta
-                window.BrevoConversations.push(['send', data.reply]);
-                console.log('✅ Respuesta enviada al widget');
-            }
+            // Delay natural para simular escritura
+            setTimeout(async () => {
+                const response = await fetch('/.netlify/functions/chat-agent', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: userMessage })
+                });
+                
+                const data = await response.json();
+                
+                if (data.reply) {
+                    // Usar la cola de comandos para enviar la respuesta
+                    // Importante: Brevo usa un array de comandos si no ha cargado, 
+                    // o una función si ya cargó.
+                    if (typeof window.BrevoConversations === 'function') {
+                        window.BrevoConversations('send', data.reply);
+                    } else {
+                        window.BrevoConversations = window.BrevoConversations || [];
+                        window.BrevoConversations.push(['send', data.reply]);
+                    }
+                    console.log('🤖 Respuesta de IA enviada al chat');
+                }
+            }, 1500);
         } catch (error) {
-            console.error('❌ Error llamando al agente:', error);
+            console.error('❌ Error en el flujo de IA:', error);
         }
     }
 
-    // Suscribirse a eventos (intentar ambos métodos por si acaso)
-    function setupSubscriptions() {
-        console.log('📡 Configurando escucha de mensajes...');
-        
-        const onMessage = function(payload) {
-            // payload.type 0 suele ser el visitante
-            if (payload && !payload.agentId && payload.content) {
-                console.log('📩 Mensaje del usuario:', payload.content);
-                setTimeout(() => handleAIChatResponse(payload.content), 1000);
-            }
-        };
-
-        // Intentar método estándar
-        window.BrevoConversations.push(['subscribe', 'message:received', onMessage]);
-        
-        // Backup: intentar método alternativo
-        window.BrevoConversations.push(['on', 'message:received', onMessage]);
-    }
-
-    // Inicialización
-    let attempts = 0;
-    function checkReady() {
-        // Si ya es una función, configuramos las suscripciones
-        if (typeof window.BrevoConversations === 'function') {
-            setupSubscriptions();
-        } else if (attempts < 10) {
-            attempts++;
-            setTimeout(checkReady, 1000);
-        } else {
-            // Si sigue siendo un array tras 10s, intentamos suscribir igual vía push
-            setupSubscriptions();
-        }
-    }
-
-    // Eliminar botones viejos y asegurar estilos
+    // 3. Estilos de seguridad para asegurar visibilidad
     const style = document.createElement('style');
     style.textContent = `
         .brevo-conversations-button { z-index: 9999 !important; bottom: 80px !important; right: 20px !important; }
@@ -85,5 +81,5 @@
     `;
     document.head.appendChild(style);
 
-    checkReady();
+    console.log('🚀 Configuración de Chat Agent completada.');
 })();

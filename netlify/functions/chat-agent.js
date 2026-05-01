@@ -1,7 +1,32 @@
 // ============================================
-// AI CHAT AGENT - LA CASA DE LAS CORTINAS
-// Genera respuestas automáticas para Brevo
+// CHAT AGENT - LUZ (La Casa de las Cortinas)
+// Netlify Function - Recibe webhooks de Brevo y responde con Gemini
 // ============================================
+
+const { GoogleGenerativeAI } = require('@google/generative-ai');
+
+// Configuración
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'AIzaSyB5BdSBtYYwSr_d25L8aMOHx56K9KaU9mI';
+const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+
+// System prompt de LUZ (su personalidad)
+const SYSTEM_PROMPT = `Eres LUZ, una asesora experta en cortinas, toldos y automatización para "La Casa de las Cortinas" en Rosario, Argentina.
+
+PERSONALIDAD:
+- Eres cordial, amable, proactiva y extremadamente profesional
+- Tu tono evoca una estética minimalista, luminosa y elegante
+- Basada en Rosario, cobertura 150km a la redonda
+- Contacto directo: 341-2687230
+
+REGLAS OBLIGATORIAS (Guardrails):
+1. Siempre intenta obtener medidas aproximadas (Ancho x Alto) para cotizaciones
+2. Usa números redondeados para precios (ej: "desde $50.000")
+3. NUNCA generes códigos QR
+4. Si detectas interés claro de compra o necesidad compleja, solicita datos de contacto para visita técnica
+5. SIEMPRE ofrece el plus de automatización (Smart Home, X-ONE, Somfy)
+
+EJEMPLO DE RESPUESTA:
+"¡Hola! 👋 Soy Luz, tu asesora de La Casa de las Cortinas. ¿Qué espacio estás pensando vestir hoy? Dame un aproximado de las medidas (ancho x alto) y te ayudo con opciones premium."`;
 
 exports.handler = async (event) => {
     const headers = {
@@ -10,45 +35,91 @@ exports.handler = async (event) => {
         'Access-Control-Allow-Methods': 'POST, OPTIONS'
     };
 
-    if (event.httpMethod === 'OPTIONS') return { statusCode: 200, headers, body: '' };
+    // Verificar método y manejar OPTIONS para CORS
+    if (event.httpMethod === 'OPTIONS') {
+        return { statusCode: 200, headers, body: '' };
+    }
 
+    if (event.httpMethod !== 'POST') {
+        return { statusCode: 405, headers, body: 'Method Not Allowed' };
+    }
+    
     try {
-        const { message, visitorId } = JSON.parse(event.body);
-        const msg = message.toLowerCase();
-
-        // Lógica de respuesta inteligente (Knowledge Base)
-        let response = "";
-
-        if (msg.includes("hola") || msg.includes("buen")) {
-            response = "¡Hola! 👋 Soy el asistente virtual de La Casa de las Cortinas. ¿En qué puedo ayudarte hoy?";
-        } else if (msg.includes("precio") || msg.includes("cuanto cuesta") || msg.includes("cotización") || msg.includes("presupuesto")) {
-            response = "Para darte un presupuesto exacto, necesito las medidas aproximadas (ancho x alto). ¿Qué tipo de cortina te interesa? (Roller, Toldos, Blackout, etc.)";
-        } else if (msg.includes("donde están") || msg.includes("direccion") || msg.includes("rosario") || msg.includes("ubicacion")) {
-            response = "Estamos en Rosario. Realizamos mediciones e instalaciones a domicilio sin cargo en toda la zona. ¿Querés agendar una visita?";
-        } else if (msg.includes("roller") || msg.includes("screen") || msg.includes("blackout")) {
-            response = "Las cortinas Roller son nuestra especialidad. Tenemos telas Blackout (oscuridad total) y Sunscreen (control solar). ¿Buscás alguna en particular?";
-        } else if (msg.includes("toldo")) {
-            response = "Ofrecemos toldos de lona acrílica y vinílica con sistemas manuales o automatizados. ¿Es para un balcón, patio o local comercial?";
-        } else if (msg.includes("tiempo") || msg.includes("demora") || msg.includes("entrega")) {
-            response = "Nuestro tiempo de entrega promedio es de 10 a 15 días hábiles, ya que fabricamos todo a medida con la mejor calidad.";
+        // Parsear el webhook de Brevo o de chat.js
+        const body = JSON.parse(event.body);
+        
+        // Extraer el mensaje del usuario
+        let userMessage = '';
+        let senderId = '';
+        let conversationId = '';
+        
+        // Brevo envía diferentes formatos según el evento, chat.js envía "message" simple
+        if (body.message && body.message.text) {
+            userMessage = body.message.text;
+            senderId = body.message.senderId || body.senderId;
+            conversationId = body.conversationId;
+        } else if (body.text) {
+            userMessage = body.text;
+            senderId = body.from || body.senderId;
+            conversationId = body.id;
+        } else if (body.content) {
+            userMessage = body.content;
+            senderId = body.userId;
         } else {
-            response = "Entiendo. Dejame consultar con un asesor humano para darte la mejor respuesta. Mientras tanto, ¿podrías dejarme un teléfono de contacto?";
+            // Formato alternativo / formato de chat.js custom
+            userMessage = body.message || body.query || body.text;
+            senderId = body.sender || body.user || 'chat-js-user';
         }
-
+        
+        console.log(`📨 Mensaje recibido: "${userMessage}" de ${senderId}`);
+        
+        if (!userMessage) {
+            return {
+                statusCode: 200,
+                headers,
+                body: JSON.stringify({ status: 'ignored', reason: 'No message content' })
+            };
+        }
+        
+        // Inicializar Gemini
+        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+        
+        // Construir el prompt con el system prompt + historial (simplificado por ahora, se puede mejorar usando el history de chat.js si llega)
+        const prompt = `${SYSTEM_PROMPT}\n\nUsuario: ${userMessage}\n\nLUZ:`;
+        
+        // Generar respuesta
+        const result = await model.generateContent(prompt);
+        const response = result.response.text();
+        
+        console.log(`🤖 Respuesta generada: "${response.substring(0, 100)}..."`);
+        
+        // Devolver respuesta para que Brevo la envíe al chat, y para chat.js usando "reply"
         return {
             statusCode: 200,
             headers,
-            body: JSON.stringify({ 
-                reply: response,
-                agent: "LCDC-AI-Agent"
+            body: JSON.stringify({
+                message: response,
+                reply: response, // Compatibilidad con chat.js
+                conversationId: conversationId,
+                senderId: senderId,
+                agent: "Luz-AI-Gemini"
             })
         };
-
+        
     } catch (error) {
+        console.error('❌ Error en chat-agent:', error);
+        
+        // Fallback amigable
+        const fallbackResponse = `¡Hola! Soy Luz. En este momento estoy terminando de procesar algunos pedidos técnicos. Para no hacerte esperar, ¿podrías indicarme tu nombre y un teléfono? Así un asesor humano podrá contactarte de inmediato. También puedes escribirnos directamente al 341-2687230.`;
+        
         return {
-            statusCode: 500,
+            statusCode: 200, // Devolvemos 200 aunque haya error para que Brevo no reintente infinitamente
             headers,
-            body: JSON.stringify({ error: error.message })
+            body: JSON.stringify({ 
+                message: fallbackResponse,
+                reply: fallbackResponse, // Compatibilidad con chat.js
+                agent: "Luz-Fallback"
+            })
         };
     }
 };

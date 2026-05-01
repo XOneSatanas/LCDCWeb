@@ -1,4 +1,4 @@
-﻿/**
+/**
  * LUZ CHAT WIDGET - LUXURY EDITION
  * Handles interactions and animations
  */
@@ -56,53 +56,51 @@ function addMessageToChat(role, text) {
     scrollToBottom();
 }
 
+let chatHistory = [];
+
 async function sendMessage() {
     const text = chatInput.value.trim();
     if (!text) return;
 
-    // Add User Message
+    // Add User Message to UI
     addMessageToChat('user', text);
     chatInput.value = '';
 
-    // Check if we expect a budget calculation
-    const isBudgetRequest = text.match(/\d+/) || text.toLowerCase().includes('medida');
-
-    if (isBudgetRequest) {
-        showRendering(true);
-    } else {
-        showTyping(true);
-    }
+    showTyping(true);
 
     try {
-        // Mock response for frontend demo
-        await new Promise(r => setTimeout(r, 1500));
-        let mockResponse = "Gracias por su consulta. Un especialista técnico se pondrá en contacto pronto.";
-        if (text.toLowerCase().includes('domotica') || text.toLowerCase().includes('automatizacion') || text.toLowerCase().includes('smart')) {
-            mockResponse = "X-1 Smart Solution permite integrar sus cortinas con los principales sistemas domóticos. ¿Le gustaría agendar una demostración técnica?";
-        } else if (isBudgetRequest) {
-            mockResponse = "He registrado los datos. Generando factibilidad técnica... \n\n**Estimación preliminar: Lista**. Un asesor le brindará los valores exactos. ¿Desea continuar por WhatsApp?";
-        } else if (text.toLowerCase().includes('catálogo') || text.toLowerCase().includes('completa')) {
-            mockResponse = "Nuestra colección incluye sistemas Roller, Onda Perfecta, Verticales y Venecianas de alta precisión. ¿Qué estilo proyectual busca para su proyecto?";
-        }
+        // Llamada real a la función de Netlify
+        const response = await fetch('/.netlify/functions/chat-agent', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                message: text,
+                history: chatHistory 
+            })
+        });
 
-        const data = { message: mockResponse, presupuesto: isBudgetRequest };
+        const data = await response.json();
 
-        // Simulate "Rendering" delay for premium feel if it's a budget
-        if (data.presupuesto) {
-            await new Promise(r => setTimeout(r, 2000)); // 2s delay
-        }
-
-        showRendering(false);
         showTyping(false);
-        addMessageToChat('assistant', data.message);
+        
+        if (data.reply) {
+            addMessageToChat('assistant', data.reply);
+            
+            // Guardar en el historial para mantener el contexto (máximo 10 mensajes)
+            chatHistory.push({ role: "user", parts: [{ text: text }] });
+            chatHistory.push({ role: "model", parts: [{ text: data.reply }] });
+            if (chatHistory.length > 10) chatHistory = chatHistory.slice(-10);
+        } else {
+            throw new Error("Respuesta vacía");
+        }
 
     } catch (error) {
         console.error('Error:', error);
-        showRendering(false);
         showTyping(false);
         addMessageToChat('assistant', 'Disculpa, hubo un error de conexión. ¿Podrías intentar de nuevo?');
     }
 }
+
 
 function showTyping(show) {
     if (!renderingIndicator) return;
