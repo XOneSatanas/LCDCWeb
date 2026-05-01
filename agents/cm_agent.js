@@ -16,21 +16,21 @@ function generateSocialMediaPosts() {
         {
             platform: "Instagram",
             format: "Reel",
-            image_ref: "assets/images/roller.png",
+            image_ref: "assets/images/roller.webp",
             copy: `Transforma la luz de tus ambientes. ☀️ Nuestras Cortinas Roller de Alta Gama ofrecen filtrado milimétrico y diseño minimalista para espacios modernos. Medición en 24hs.\n\n📲 Solicita asesoría sin cargo en el link de la bio.\n${businessDNA.hashtags.join(" ")}`,
             schedule_time: "Lunes 18:00hs"
         },
         {
             platform: "Facebook",
             format: "Carousel",
-            image_ref: "assets/images/perfect_wave.png",
+            image_ref: "assets/images/perfect_wave.webp",
             copy: `La máxima expresión del lujo textil: Sistema Onda Perfecta. Caída uniforme que aporta calidez y sofisticación a tu living o dormitorio. Calidad premium garantizada por 1 año. ✨\n\n👉 Contactanos por WhatsApp hoy mismo para un presupuesto.\n${businessDNA.hashtags.join(" ")}`,
             schedule_time: "Miércoles 12:00hs"
         },
         {
             platform: "Instagram",
             format: "Story",
-            image_ref: "assets/images/automatizacion.jpg",
+            image_ref: "assets/images/automatizacion.webp",
             copy: `¿Casa inteligente? 🏠 Tus cortinas y toldos ahora integrados a tu celular o asistente de voz con la tecnología X-1 Powered. Confort total al alcance de un clic. 👆\n\n[LINK: Ver Sistemas]`,
             schedule_time: "Viernes 20:00hs"
         }
