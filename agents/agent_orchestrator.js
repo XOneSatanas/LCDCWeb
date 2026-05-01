@@ -82,9 +82,15 @@ async function runAllAgents({ returnResults = true } = {}) {
         console.error('❌ Security Agent falló:', error.message);
     }
     
-    // Calcular Health Score global
-    const scores = Object.values(results.agents).map(a => typeof a.score === 'number' ? a.score : 70);
-    const globalHealth = scores.reduce((a, b) => a + b, 0) / scores.length;
+    // Calcular Health Score global (solo agentes con éxito o advertencia)
+    const validScores = Object.values(results.agents)
+        .filter(a => a.status !== 'ERROR' && typeof a.score === 'number')
+        .map(a => a.score);
+    
+    const globalHealth = validScores.length > 0 
+        ? validScores.reduce((a, b) => a + b, 0) / validScores.length 
+        : 0;
+        
     results.healthScore = Math.round(globalHealth);
     results.executionTimeSeconds = ((Date.now() - startTime) / 1000).toFixed(2);
     

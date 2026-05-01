@@ -277,21 +277,25 @@ class CommunityManager {
     }
     
     logInteraction(userId, message, intent, response) {
-        const logFile = path.join(__dirname, '../logs/cm-interactions.json');
-        const interaction = {
-            userId,
-            message,
-            intent,
-            response: response.substring(0, 200),
-            timestamp: new Date().toISOString()
-        };
-        
-        let logs = [];
-        if (fs.existsSync(logFile)) {
-            logs = JSON.parse(fs.readFileSync(logFile, 'utf-8'));
+        try {
+            const logFile = path.join(__dirname, '../logs/cm-interactions.json');
+            const interaction = {
+                userId,
+                message,
+                intent,
+                response: response.substring(0, 200),
+                timestamp: new Date().toISOString()
+            };
+            
+            let logs = [];
+            if (fs.existsSync(logFile)) {
+                logs = JSON.parse(fs.readFileSync(logFile, 'utf-8'));
+            }
+            logs.push(interaction);
+            fs.writeFileSync(logFile, JSON.stringify(logs, null, 2));
+        } catch (e) {
+            console.log('⚠️ No se pudo guardar el log de interacción (entorno de solo lectura)');
         }
-        logs.push(interaction);
-        fs.writeFileSync(logFile, JSON.stringify(logs, null, 2));
     }
     
     async getEngagementMetrics(postId) {
@@ -321,14 +325,18 @@ class ApprovalSystem {
             status: 'PENDING'
         };
         
-        // Guardar localmente
-        const pendingFile = path.join(__dirname, '../pending-cm-approvals.json');
-        let pending = [];
-        if (fs.existsSync(pendingFile)) {
-            pending = JSON.parse(fs.readFileSync(pendingFile, 'utf-8'));
+        // Guardar localmente (opcional, fallará en Netlify)
+        try {
+            const pendingFile = path.join(__dirname, '../pending-cm-approvals.json');
+            let pending = [];
+            if (fs.existsSync(pendingFile)) {
+                pending = JSON.parse(fs.readFileSync(pendingFile, 'utf-8'));
+            }
+            pending.push(approvalRequest);
+            fs.writeFileSync(pendingFile, JSON.stringify(pending, null, 2));
+        } catch (e) {
+            console.log('⚠️ No se pudo guardar el archivo de aprobación local (entorno de solo lectura)');
         }
-        pending.push(approvalRequest);
-        fs.writeFileSync(pendingFile, JSON.stringify(pending, null, 2));
         
         // Enviar a webhook (Slack, Discord, Telegram, etc.)
         try {
