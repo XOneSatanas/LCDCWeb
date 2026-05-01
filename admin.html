@@ -408,7 +408,6 @@
             if(!term) return;
             const p = document.createElement('p');
             const time = new Date().toLocaleTimeString();
-            // Map simple color names to tailwind-like classes or use direct colors
             const colorMap = {
                 'cyan': '#06b6d4',
                 'white': '#ffffff',
@@ -433,9 +432,30 @@
             if (!data || !data.agents) return;
             
             // Actualizar Health Score
-            const healthScoreElem = document.querySelector('.grid .bg-white .text-4xl');
+            const healthScoreElem = document.querySelector('.bg-white .text-4xl');
             if (healthScoreElem && data.healthScore) {
                 healthScoreElem.innerText = `${data.healthScore}%`;
+                
+                // Actualizar badge de estado
+                const parent = healthScoreElem.closest('.bg-white');
+                if (parent) {
+                    const badge = parent.querySelector('.text-[10px]');
+                    if (badge) {
+                        if (data.healthScore >= 90) {
+                            badge.innerText = 'EXCELLENT';
+                            badge.className = 'text-[10px] font-black bg-green-50 text-green-700 px-2 py-1 rounded';
+                        } else if (data.healthScore >= 70) {
+                            badge.innerText = 'GOOD';
+                            badge.className = 'text-[10px] font-black bg-cyan-50 text-cyan-700 px-2 py-1 rounded';
+                        } else if (data.healthScore >= 50) {
+                            badge.innerText = 'WARNING';
+                            badge.className = 'text-[10px] font-black bg-orange-50 text-orange-700 px-2 py-1 rounded';
+                        } else {
+                            badge.innerText = 'CRITICAL';
+                            badge.className = 'text-[10px] font-black bg-red-50 text-red-700 px-2 py-1 rounded';
+                        }
+                    }
+                }
             }
             
             // Actualizar Activity Feed
@@ -443,11 +463,22 @@
             if (activityFeed && data.executionTimeSeconds) {
                 const newActivity = document.createElement('div');
                 newActivity.className = 'flex gap-4';
+                
+                let statusColor = 'bg-green-500';
+                let statusText = 'Global Audit Completed';
+                if (data.summary?.errorCount > 0) {
+                    statusColor = 'bg-red-500';
+                    statusText = `Global Audit Completed with ${data.summary.errorCount} errors`;
+                } else if (data.summary?.warningCount > 0) {
+                    statusColor = 'bg-orange-500';
+                    statusText = `Global Audit Completed with ${data.summary.warningCount} warnings`;
+                }
+                
                 newActivity.innerHTML = `
-                    <div class="w-2 h-2 rounded-full bg-green-500 mt-2"></div>
+                    <div class="w-2 h-2 rounded-full ${statusColor} mt-2"></div>
                     <div>
-                        <p class="font-bold">Global Audit Completed</p>
-                        <p class="text-sm text-slate-500">All agents executed in ${data.executionTimeSeconds}s</p>
+                        <p class="font-bold">${statusText}</p>
+                        <p class="text-sm text-slate-500">Health Score: ${data.healthScore}% | ${data.executionTimeSeconds}s</p>
                         <span class="text-[10px] text-slate-400 font-bold uppercase mt-1">Just now</span>
                     </div>
                 `;
@@ -458,18 +489,10 @@
             }
             
             // Actualizar tarjetas de agentes
-            if (data.agents.seo) {
-                updateAgentCard('SEO Agent', data.agents.seo.score, data.agents.seo.status);
-            }
-            if (data.agents.sre) {
-                updateAgentCard('SRE Agent', data.agents.sre.score, data.agents.sre.status);
-            }
-            if (data.agents.security) {
-                updateAgentCard('Security Agent', data.agents.security.score, data.agents.security.status);
-            }
-            if (data.agents.cm) {
-                updateAgentCard('CM Agent (Social)', data.agents.cm.score, data.agents.cm.status);
-            }
+            updateAgentCard('SEO Agent', data.agents.seo?.score, data.agents.seo?.status);
+            updateAgentCard('SRE Agent', data.agents.sre?.score, data.agents.sre?.status);
+            updateAgentCard('Security Agent', data.agents.security?.score, data.agents.security?.status);
+            updateAgentCard('CM Agent (Social)', data.agents.cm?.score, data.agents.cm?.status);
         }
 
         function updateAgentCard(agentName, score, status) {
@@ -478,19 +501,29 @@
                 const titleElem = card.querySelector('h4');
                 if (titleElem && titleElem.innerText.includes(agentName)) {
                     // Actualizar score bar
-                    const bar = card.querySelector('.bg-slate-100 div[class*="bg-"]');
-                    if (bar) {
-                        bar.style.width = `${score}%`;
-                        const colorClass = score >= 80 ? 'bg-cyan-500' : score >= 60 ? 'bg-orange-500' : 'bg-red-500';
+                    const barContainer = card.querySelector('.bg-slate-100');
+                    if (barContainer) {
+                        let bar = barContainer.querySelector('div[class*="rounded-full"]');
+                        if (!bar) {
+                            bar = document.createElement('div');
+                            bar.className = 'h-full rounded-full transition-all duration-1000';
+                            barContainer.appendChild(bar);
+                        }
+                        const displayScore = score || 0;
+                        bar.style.width = `${displayScore}%`;
+                        const colorClass = displayScore >= 80 ? 'bg-cyan-500' : displayScore >= 60 ? 'bg-orange-500' : 'bg-red-500';
                         bar.className = `h-full rounded-full transition-all duration-1000 ${colorClass}`;
                     }
+                    
                     // Actualizar texto de score
                     const scoreText = card.querySelector('.text-xs.font-bold.uppercase.tracking-widest');
                     if (scoreText) {
-                        scoreText.innerText = `Score: ${score}/100`;
-                        const textColorClass = score >= 80 ? 'text-cyan-600' : score >= 60 ? 'text-orange-600' : 'text-red-600';
+                        const displayScore = score || 0;
+                        scoreText.innerText = `Score: ${displayScore}/100`;
+                        const textColorClass = displayScore >= 80 ? 'text-cyan-600' : displayScore >= 60 ? 'text-orange-600' : 'text-red-600';
                         scoreText.className = `text-xs font-bold uppercase tracking-widest ${textColorClass}`;
                     }
+                    
                     // Actualizar badge
                     const badge = card.querySelector('.px-2.py-1.text-[10px].font-bold.rounded.uppercase');
                     if (badge) {
@@ -510,56 +543,46 @@
             }
         }
 
-        // Función para cargar estado guardado
-        async function loadAgentStatus() {
-            try {
-                const response = await fetch('/agent-results.json?t=' + Date.now());
-                if (response.ok) {
-                    const data = await response.json();
-                    updateDashboardWithRealData(data);
-                    logToTerminal('SYSTEM: Previous session data loaded.', 'white');
-                }
-            } catch (error) {
-                console.log('No se pudo cargar estado previo:', error.message);
-            }
-        }
-
         // AGENT TRIGGER (REAL)
         async function runAgentsTrigger() {
             logToTerminal('CMD_RUN: Initializing global audit (REAL AGENTS)...', 'white');
             
-            // Cambiar estado del botón
-            const runBtn = document.querySelector('button[onclick="runAgentsTrigger()"]');
+            const runBtn = document.querySelector('#run-agents-btn') || document.querySelector('button[onclick="runAgentsTrigger()"]');
             const originalHtml = runBtn ? runBtn.innerHTML : '';
             
             if (runBtn) {
                 runBtn.disabled = true;
                 runBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Executing...';
+                if (!runBtn.id) runBtn.id = 'run-agents-btn';
             }
             
             try {
-                const response = await fetch('/.netlify/functions/run-agents', { method: 'POST' });
+                const response = await fetch('/.netlify/functions/run-agents', { 
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
                 const data = await response.json();
                 
                 if (data.status === 'success') {
-                    logToTerminal(`SERVER: Ejecución completada en ${data.data.executionTimeSeconds}s`, 'green');
-                    logToTerminal(`Health Score Global: ${data.data.healthScore}%`, 'cyan');
+                    const results = data.data;
+                    logToTerminal(`SERVER: Ejecución completada en ${results.executionTimeSeconds}s`, 'green');
+                    logToTerminal(`Health Score Global: ${results.healthScore}%`, 'cyan');
                     
                     // Actualizar dashboard con datos reales
-                    updateDashboardWithRealData(data.data);
+                    updateDashboardWithRealData(results);
                     
                     // Logs detallados por agente
-                    if (data.data.agents.seo) {
-                        logToTerminal(`SEO_AGENT: Score ${data.data.agents.seo.score}/100`, data.data.agents.seo.score >= 80 ? 'green' : 'yellow');
+                    if (results.agents.seo) {
+                        logToTerminal(`SEO_AGENT: Score ${results.agents.seo.score}/100`, results.agents.seo.score >= 80 ? 'green' : 'yellow');
                     }
-                    if (data.data.agents.sre) {
-                        logToTerminal(`SRE_AGENT: Performance ${data.data.agents.sre.score}/100`, data.data.agents.sre.score >= 80 ? 'green' : 'yellow');
+                    if (results.agents.sre) {
+                        logToTerminal(`SRE_AGENT: Performance ${results.agents.sre.score}/100`, results.agents.sre.score >= 80 ? 'green' : 'yellow');
                     }
-                    if (data.data.agents.security) {
-                        const sec = data.data.agents.security;
+                    if (results.agents.security) {
+                        const sec = results.agents.security;
                         logToTerminal(`SECURITY_AGENT: ${sec.issuesCount || 0} issues encontrados. Score: ${sec.score}/100`, sec.score >= 80 ? 'green' : 'orange');
                     }
-                    if (data.data.agents.cm) {
+                    if (results.agents.cm) {
                         logToTerminal(`CM_AGENT: Social content generated successfully`, 'purple');
                     }
                     
@@ -568,7 +591,8 @@
                 }
                 
             } catch (error) {
-                logToTerminal(`ERROR: Failed to connect to Netlify Function - ${error.message}`, 'red');
+                logToTerminal(`ERROR: ${error.message}`, 'red');
+                console.error('Fetch error:', error);
             } finally {
                 if (runBtn) {
                     runBtn.disabled = false;
@@ -584,9 +608,11 @@
             }
         });
 
-        // Cargar estado al iniciar
+        // Initialize state on load
         document.addEventListener('DOMContentLoaded', () => {
-            loadAgentStatus();
+            const runBtn = document.querySelector('button[onclick="runAgentsTrigger()"]');
+            if (runBtn && !runBtn.id) runBtn.id = 'run-agents-btn';
+            logToTerminal('SYSTEM: Dashboard ready. Awaiting commands.', 'white');
         });
     </script>
 </body>
