@@ -397,6 +397,45 @@
             border-color: #00e5ff;
             background: rgba(0, 229, 255, 0.02);
         }
+
+        /* ULTRALIGHT GOOGLE SEARCH */
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto;
+            opacity: 0.3;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: grayscale(1);
+        }
+
+        .search-container:hover, .search-container:focus-within {
+            opacity: 1;
+            filter: grayscale(0);
+            transform: translateY(-2px);
+        }
+
+        /* Overriding Google's Default Styles (Heavy lifting) */
+        .gsc-control-cse {
+            background-color: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+        }
+        .gsc-input-box {
+            background-color: rgba(255, 255, 255, 0.03) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-radius: 12px !important;
+            overflow: hidden;
+        }
+        .gsc-search-button-v2 {
+            background-color: transparent !important;
+            border: none !important;
+            padding: 10px 15px !important;
+        }
+        .gsc-search-button-v2 svg {
+            fill: #00e5ff !important;
+        }
+        .gsib_a { padding: 5px 15px !important; }
+        .gsc-input { color: #fff !important; font-family: 'Inter', sans-serif !important; }
+        .gsc-completion-container { background: #0a0a0a !important; border: 1px solid #1a1a1a !important; color: #fff !important; }
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -419,9 +458,10 @@
 <body class="bg-black text-white overflow-x-hidden">
 
     <!-- SEARCH SECTION -->
-<section class="search-section py-12 bg-[#050505] text-center">
-  <h2 class="text-4xl md:text-5xl font-black uppercase mb-6">Buscar en el sitio</h2>
-  <div class="gcse-search"></div>
+<section class="search-section py-8 bg-black border-b border-white/5">
+    <div class="search-container">
+        <div class="gcse-search" data-resultsUrl="index.html" data-newWindow="false" data-queryParameterName="s"></div>
+    </div>
 </section>
 <!-- NAVBAR: FULL WIDTH & STICKY -->
     <header class="fixed top-0 left-0 w-full z-[100] navbar flex justify-between items-center px-6 md:px-16 bg-black/40 backdrop-blur-xl border-b border-white/5 transition-all duration-500">
